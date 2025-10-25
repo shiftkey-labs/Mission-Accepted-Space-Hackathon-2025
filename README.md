@@ -33,7 +33,7 @@ Mission Accepted invites students and early-career professionals to build impact
 
 ## Questions or Support
 - Use the event’s Discord server for mentor support.
-- Tag the ShiftKey Labs or MDA mentors for dataset or tooling questions.
+- Tag the ShiftKey Labs, MDA or CSA mentors for dataset or tooling questions.
 - For repository access issues, contact the organizing team via the submission form or the designated help desk.
 
 Mission Accepted!

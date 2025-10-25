@@ -29,6 +29,7 @@ Mission Accepted invites students and early-career professionals to build impact
    - **Preferred:** URL [https://airtable.com/appkB4tLGaUIf7rIf/pag39Qc7I2IAeGvLR/form](https://airtable.com/appkB4tLGaUIf7rIf/pag39Qc7I2IAeGvLR/form) to your pull request so reviewers can see exactly what changed.
    - **Optional fallback:** URL to your fork’s main branch if the PR is not yet accessible.
 2. Ensure the PR and the form are both submitted before the hackathon deadline. The organizers will use the PR link for judging, and the fork link only if the PR cannot be accessed.
+3. Make sure your repository is public
 
 ## Questions or Support
 - Use the event’s Discord server for mentor support.

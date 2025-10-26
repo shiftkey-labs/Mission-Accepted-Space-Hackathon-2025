@@ -1,0 +1,31 @@
+.map-container { position: relative; }
+
+.map-loading-overlay {
+  position: absolute;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0,0,0,0.25);
+  z-index: 80;
+  pointer-events: none;
+}
+
+.map-loading-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.18);
+  border-top-color: #fff;
+  animation: map-spin 1s linear infinite;
+}
+
+.map-loading-text {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@keyframes map-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

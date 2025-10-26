@@ -1,0 +1,104 @@
+.calendar-horizontal {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  pointer-events: auto;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+}
+
+.calendar-horizontal__inner {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+}
+
+.calendar-horizontal__years {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #ddd;
+  margin-bottom: 6px;
+}
+
+.calendar-horizontal__bubble {
+  position: absolute;
+  top: -34px;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: left 120ms ease;
+}
+
+.calendar-horizontal__bubble.is-sliding {
+  transition: none;
+}
+
+.calendar-horizontal__bubble-inner {
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.calendar-horizontal__bubble-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-horizontal__spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-top-color: #ffffff;
+  animation: calendar-spin 1s linear infinite;
+  box-sizing: border-box;
+}
+
+.calendar-horizontal__bubble-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@keyframes calendar-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.calendar-horizontal__slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #444, #666);
+  outline: none;
+}
+
+/* Thumb styles */
+.calendar-horizontal__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.calendar-horizontal__slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}

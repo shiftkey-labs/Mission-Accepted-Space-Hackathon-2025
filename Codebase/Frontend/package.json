@@ -1,0 +1,31 @@
+{
+  "name": "satellocator-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000 --webpack",
+    "dev:3001": "next dev --port 3001 --webpack",
+    "dev:inspect": "NODE_OPTIONS='--inspect' next dev --port 3000 --webpack",
+    "build": "next build --webpack",
+    "start": "next start -p 3000",
+    "start:3001": "next start -p 3001",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "next": "16.0.0",
+    "postprocessing": "^6.37.8",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "satellite.js": "^6.0.1",
+    "socket.io-client": "^4.8.1",
+    "three": "^0.180.0",
+    "three-stdlib": "^2.36.0"
+  },
+  "devDependencies": {
+    "eslint": "^9",
+    "eslint-config-next": "16.0.0"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

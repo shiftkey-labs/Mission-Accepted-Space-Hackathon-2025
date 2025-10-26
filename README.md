@@ -33,3 +33,6 @@ By combining satellite Earth Observation data with data feeds, and applying **ma
 **Team Members**
 - Rehab Shakir - [LinkedIn](www.linkedin.com/in/rehabshakir)
 - Tanishka Ghosh - [LinkedIn](https://www.linkedin.com/in/tanishka-ghosh)
+
+Link to repo:
+https://github.com/Tanishka-G/geospatial-app-vite

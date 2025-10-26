@@ -1,6 +1,6 @@
-# 🛰️ ProjectShores – Protecting Canadian Shorelines with Satellite Data  
+# ProjectShores – Protecting Canadian Shorelines with Satellite Data  
 
-## 🌍 Overview  
+## Overview  
 Canada has the largest coastline in the world, and its shorelines are increasingly threatened by climate change. Rising ocean temperatures, melting Arctic ice, and new trade routes pose risks to both ecosystems and communities.  
 
 Our project focuses on **three key factors**:  
@@ -12,7 +12,7 @@ By combining satellite Earth Observation data with data feeds, a prototype was b
 
 ---
 
-## 🛠 Data Sources  
+## Data Sources  
 - **RADARSAT / Sentinel-1** → Sea ice extent and melt patterns.  
 - **Satellite AIS (Automatic Identification System)** → Ship positions and routes.  
 - **Tagging datasets (DFO/WWF)** → Leatherback turtle migration corridors.  
@@ -20,7 +20,7 @@ By combining satellite Earth Observation data with data feeds, a prototype was b
 
 ---
 
-## 🤖 Approach  
+## Approach  
 1. **Data Integration**  
    - Mapped ice extent, turtle migration corridors, and shipping routes on a single geospatial layer.  
    - Highlighted overlap “red zones” where risks to coastlines and wildlife are highest.  

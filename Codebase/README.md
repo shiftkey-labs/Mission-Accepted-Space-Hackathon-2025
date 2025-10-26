@@ -1,4 +1,4 @@
-To Acess this project it requires installing flask to run the server. But 5 minutes after submission we uploaded it to the university server so that it can be
+To Access this project it requires installing flask to run the server. But 5 minutes after submission we uploaded it to the university server so that it can be
 acessed and ran remotely (making it easier for you to view)
 
 You can access the newer code at the projects github page - > https://github.com/HazemAbdelkader3636/Space-Hackathon

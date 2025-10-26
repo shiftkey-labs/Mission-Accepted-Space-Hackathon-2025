@@ -1,0 +1,8 @@
+numpy
+matplotlib
+rasterio
+scipy
+scikit-learn
+cdsapi
+xarray
+netcdf4

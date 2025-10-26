@@ -1,0 +1,413 @@
+/* AlgalWatch Dashboard Styles */
+
+:root {
+    --primary-color: #2c5282;
+    --secondary-color: #38a169;
+    --accent-color: #3182ce;
+    --danger-color: #e53e3e;
+    --warning-color: #dd6b20;
+    --success-color: #38a169;
+    --info-color: #3182ce;
+    --light-gray: #f8fafc;
+    --medium-gray: #e2e8f0;
+    --dark-gray: #4a5568;
+    --text-primary: #2d3748;
+    --text-secondary: #718096;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-gray);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Navigation */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Main Content */
+.main-content {
+    min-height: calc(100vh - 160px);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    border: none !important;
+    position: relative;
+    overflow: hidden;
+    color: black !important;
+}
+
+.hero-section h1,
+.hero-section p,
+.hero-section .lead {
+    color: black !important;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    z-index: 1;
+}
+
+.hero-section > .row {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-icon {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Stats Cards */
+.stats-card {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+}
+
+.stats-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.stats-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.stats-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stats-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+    border-radius: 12px 12px 0 0 !important;
+    font-weight: 600;
+}
+
+.card-title {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.card-title i {
+    opacity: 0.8;
+}
+
+/* Alert Indicators */
+.alert-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #2a4f7a 0%, #2c7bb8 100%);
+    box-shadow: 0 4px 12px rgba(44, 82, 130, 0.3);
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(44, 82, 130, 0.2);
+}
+
+.btn-group .btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* List Groups */
+.list-group-item {
+    border: none !important;
+    transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.list-group-item h6 {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Map Placeholder */
+.map-placeholder {
+    border-radius: 0 0 12px 12px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* Badges */
+.badge {
+    font-weight: 500;
+    padding: 0.4em 0.8em;
+    border-radius: 6px;
+}
+
+/* Chart Container */
+#bloomChart {
+    max-height: 300px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 2rem !important;
+    }
+    
+    .hero-section .display-4 {
+        font-size: 2rem;
+    }
+    
+    .stats-value {
+        font-size: 1.5rem;
+    }
+    
+    .btn-lg {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Custom Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.stats-card:nth-child(1) { animation-delay: 0.1s; }
+.stats-card:nth-child(2) { animation-delay: 0.2s; }
+.stats-card:nth-child(3) { animation-delay: 0.3s; }
+.stats-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light-gray: #1a202c;
+        --medium-gray: #2d3748;
+        --text-primary: #f7fafc;
+        --text-secondary: #a0aec0;
+    }
+    
+    body {
+        background-color: var(--light-gray);
+        color: var(--text-primary);
+    }
+    
+    .card {
+        background-color: var(--medium-gray);
+        border-color: #4a5568;
+    }
+    
+    .card-header {
+        background-color: var(--medium-gray) !important;
+        border-color: #4a5568;
+    }
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--medium-gray);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-gray);
+}
+
+/* Lake Selection Styles */
+.lake-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.lake-option {
+    transition: all 0.2s ease;
+    border: none !important;
+}
+
+.lake-option:hover {
+    background-color: rgba(0, 123, 255, 0.05) !important;
+    transform: translateX(2px);
+}
+
+.lake-option.active {
+    background-color: rgba(0, 123, 255, 0.1) !important;
+    border-left: 3px solid var(--primary-color) !important;
+}
+
+.lake-option.active .lake-indicator {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+/* Lake Image Container Styles */
+#plotLoader {
+    transition: opacity 0.3s ease;
+}
+
+#lakeWinnipegPlot {
+    transition: opacity 0.3s ease;
+}
+
+.map-placeholder {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+/* 4-Column Layout Styles */
+@media (max-width: 768px) {
+    /* Stack columns on mobile */
+    #mainAnalysisContainer .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+    /* 2 columns on tablet */
+    #mainAnalysisContainer .col-md-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 1200px) {
+    /* 4 columns on desktop */
+    #mainAnalysisContainer .col-md-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+/* Enhanced visual feedback for enabled/disabled states */
+#precipitationImageContainer, #waterTempImageContainer {
+    transition: opacity 0.3s ease;
+}
+
+#precipitationImageContainer.disabled, #waterTempImageContainer.disabled {
+    opacity: 0.6;
+}
+
+/* Improved placeholder styling for smaller columns */
+#precipitationPlaceholder, #waterTempPlaceholder {
+    padding: 1rem;
+    min-height: 120px;
+}
+
+#precipitationPlaceholder p, #waterTempPlaceholder p {
+    font-size: 0.85rem;
+    margin-bottom: 0;
+}

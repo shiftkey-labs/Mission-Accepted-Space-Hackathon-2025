@@ -1,0 +1,53 @@
+### Water Temperature API HTTP Tests
+### Use this file with VS Code REST Client extension or similar tools
+
+@baseUrl = http://127.0.0.1:5000
+@contentType = application/json
+
+###
+# Health Check
+GET {{baseUrl}}/health
+
+###
+# Water Temperature Analysis for Lake Winnipeg
+POST {{baseUrl}}/api/water-temperature/analyze
+Content-Type: {{contentType}}
+
+{
+    "bbox": [-101.273432, 50.075155, -96.060934, 54.171428],
+    "start_date": "2022-08-01T00:00:00Z",
+    "end_date": "2022-08-25T23:59:59Z",
+    "location_name": "Lake Winnipeg"
+}
+
+###
+# Water Temperature Analysis with different dates
+POST {{baseUrl}}/api/water-temperature/analyze
+Content-Type: {{contentType}}
+
+{
+    "bbox": [-101.273432, 50.075155, -96.060934, 54.171428],
+    "start_date": "2022-07-01T00:00:00Z",
+    "end_date": "2022-07-31T23:59:59Z",
+    "location_name": "Lake Winnipeg Summer"
+}
+
+###
+# Error Test - Missing required fields
+POST {{baseUrl}}/api/water-temperature/analyze
+Content-Type: {{contentType}}
+
+{
+    "bbox": [-101.273432, 50.075155, -96.060934, 54.171428]
+}
+
+###
+# Error Test - Invalid bbox
+POST {{baseUrl}}/api/water-temperature/analyze
+Content-Type: {{contentType}}
+
+{
+    "bbox": "invalid",
+    "start_date": "2022-08-01T00:00:00Z",
+    "end_date": "2022-08-25T23:59:59Z"
+}

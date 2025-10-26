@@ -1,0 +1,14 @@
+@baseUrl = http://127.0.0.1:5000
+@contentType = application/json
+
+###
+POST {{baseUrl}}/api/satellite/raw-image
+Content-Type: {{contentType}}
+
+{
+  "bbox": [-101.273432, 50.075155, -96.060934, 54.171428],
+  "start_date": "2022-08-01T10:00:00Z",
+  "end_date": "2022-08-31T22:00:00Z",
+  "width": 1000,
+  "height": 1000
+}

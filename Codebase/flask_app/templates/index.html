@@ -1,0 +1,1239 @@
+{% extends "base.html" %} {% block content %}
+<div class="container-fluid py-4">
+  <!-- Hero Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="hero-section bg-gradient rounded-3 p-5">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <h1 class="display-4 fw-bold mb-3">
+              BloomWatch Dashboard
+            </h1>
+            <p class="lead mb-4">
+            Integrated analysis of water temperature, precipitation, topography, and agricultural land to assess and visualize conditions influencing algal blooms. View the combined environmental layers alongside the satellite image for a complete understanding of bloom dynamics.
+            </p>
+          </div>
+          <div class="col-md-4 text-center">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Dashboard Content -->
+  <div class="row">
+    <!-- Lake Selection -->
+    <div class="lg-6 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-0 py-3">
+          <h5 class="card-title mb-0">
+            Select Lake to Analyze
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="list-group list-group-flush">
+            <a
+              href="#"
+              class="list-group-item list-group-item-action lake-option active"
+              data-lake="winnipeg"
+            >
+              <div class="d-flex align-items-center">
+                <div class="lake-indicator bg-primary me-3"></div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">Lake Winnipeg</h6>
+                  <p class="mb-0 text-muted small">
+                    Manitoba, Canada - Major freshwater lake
+                  </p>
+                </div>
+                <i class="fas fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="list-group-item list-group-item-action lake-option"
+              data-lake="superior"
+            >
+              <div class="d-flex align-items-center">
+                <div class="lake-indicator bg-info me-3"></div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">Lake Superior</h6>
+                  <p class="mb-0 text-muted small">
+                    Great Lakes - Largest freshwater lake
+                  </p>
+                </div>
+                <i class="fas fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="list-group-item list-group-item-action lake-option"
+              data-lake="huron"
+            >
+              <div class="d-flex align-items-center">
+                <div class="lake-indicator bg-success me-3"></div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">Lake Huron</h6>
+                  <p class="mb-0 text-muted small">
+                    Great Lakes - Second largest
+                  </p>
+                </div>
+                <i class="fas fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="list-group-item list-group-item-action lake-option"
+              data-lake="michigan"
+            >
+              <div class="d-flex align-items-center">
+                <div class="lake-indicator bg-warning me-3"></div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">Lake Michigan</h6>
+                  <p class="mb-0 text-muted small">
+                    Great Lakes - Third largest
+                  </p>
+                </div>
+                <i class="fas fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="list-group-item list-group-item-action lake-option"
+              data-lake="erie"
+            >
+              <div class="d-flex align-items-center">
+                <div class="lake-indicator bg-danger me-3"></div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">Lake Erie</h6>
+                  <p class="mb-0 text-muted small">Great Lakes - Shallowest</p>
+                </div>
+                <i class="fas fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="list-group-item list-group-item-action lake-option"
+              data-lake="fundy"
+            >
+              <div class="d-flex align-items-center">
+                <div class="lake-indicator bg-info me-3"></div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">Bay of Fundy</h6>
+                  <p class="mb-0 text-muted small">
+                    New Brunswick/Nova Scotia - Highest tides in the world
+                  </p>
+                </div>
+                <i class="fas fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="list-group-item list-group-item-action lake-option"
+              data-lake="stlawrence"
+            >
+              <div class="d-flex align-items-center">
+                <div class="lake-indicator bg-success me-3"></div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">Gulf of Saint Lawrence</h6>
+                  <p class="mb-0 text-muted small">
+                    Quebec/Maritimes - Large gulf connecting to Atlantic Ocean
+                  </p>
+                </div>
+                <i class="fas fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="card-footer bg-white border-0 text-center">
+          <small class="text-muted">
+            <i class="fas fa-info-circle me-1"></i>
+            Click any lake to view its analysis
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map and Data Section -->
+  <div class="row">
+    <!-- Interactive Map -->
+    <div class="col-lg-8 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-0 py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">
+              Monitoring Locations
+            </h5>
+            <div class="d-flex align-items-center gap-3">
+              <!-- Date Range Selector -->
+              <div class="d-flex align-items-center gap-2">
+                <label
+                  for="analysisDate"
+                  class="form-label small mb-0 text-muted"
+                  >Analysis Date:</label
+                >
+                <input
+                  type="date"
+                  id="analysisDate"
+                  class="form-control form-control-sm"
+                  value="2022-08-01"
+                  min="2020-01-01"
+                  max="2024-12-31"
+                  title="Start date for satellite analysis (end date is automatically set to 1 month later)"
+                />
+                <button
+                  id="refreshAnalysis"
+                  class="btn btn-outline-success btn-sm"
+                  title="Refresh with selected date"
+                >
+                  <i class="fas fa-sync-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div
+            class="map-placeholder bg-light"
+            style="height: 725px; position: relative; overflow: hidden"
+          >
+            <!-- Loading Screen -->
+            <div
+              id="plotLoader"
+              class="d-flex align-items-center justify-content-center"
+              style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(248, 249, 250, 0.95);
+                z-index: 10;
+              "
+            >
+              <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-muted small mt-2">
+                  Loading latest Lake Winnipeg analysis...
+                </p>
+              </div>
+            </div>
+
+            <!-- Lake Images Grid - Dynamic Layout -->
+            <div
+              id="plotContainer"
+              class="row g-3"
+              style="width: 100%; height: 100%; position: relative"
+            >
+              <!-- Analysis Images - Dynamic Layout -->
+              <div id="mainAnalysisContainer" class="col-12">
+                <div class="row g-2">
+                  <div class="col-md-6" id="processedAnalysisCol">
+                    <div class="text-center mb-2">
+                      <small class="text-muted fw-bold"
+                        >Processed Analysis</small
+                      >
+                    </div>
+                    <div
+                      class="border rounded p-1 image-container clickable-image-container"
+                      style="background: #f8f9fa; min-height: 320px"
+                      title="Click to view full size"
+                    >
+                      <img
+                        id="lakeWinnipegPlot"
+                        src=""
+                        alt="Lake Analysis"
+                        class="clickable-image"
+                        style="display: none"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-6" id="rawSatelliteCol">
+                    <div class="text-center mb-2">
+                      <small class="text-muted fw-bold"
+                        >Raw Satellite Image</small
+                      >
+                    </div>
+                    <div
+                      class="border rounded p-1 image-container clickable-image-container"
+                      style="background: #f8f9fa; min-height: 320px"
+                      title="Click to view full size"
+                    >
+                      <img
+                        id="rawSatelliteImage"
+                        src=""
+                        alt="Raw Satellite"
+                        class="clickable-image"
+                        style="display: none"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    id="precipitationImageContainer"
+                    class="col-md-3"
+                    style="display: none"
+                  >
+                    <div class="text-center mb-2">
+                      <small class="text-muted fw-bold"
+                        >Precipitation Analysis</small
+                      >
+                    </div>
+                    <div
+                      class="border rounded p-1 clickable-image-container"
+                      style="
+                        background: #f0f8ff;
+                        border-color: #007bff !important;
+                      "
+                      title="Click to view full size"
+                    >
+                      <img
+                        id="precipitationImage"
+                        src=""
+                        alt="Precipitation Analysis"
+                        class="clickable-image"
+                        style="display: none"
+                      />
+                      <div
+                        id="precipitationPlaceholder"
+                        class="text-center text-muted"
+                        style="
+                          display: block;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          flex-direction: column;
+                        "
+                      >
+                        <i class="fas fa-cloud-rain fa-2x mb-2"></i>
+                        <p class="small">Click "Load Precipitation Data"</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    id="waterTempImageContainer"
+                    class="col-md-3"
+                    style="display: none"
+                  >
+                    <div class="text-center mb-2">
+                      <small class="text-muted fw-bold"
+                        >Water Temperature</small
+                      >
+                    </div>
+                    <div
+                      class="border rounded p-1 clickable-image-container"
+                      style="
+                        background: #fff8f0;
+                        border-color: #fd7e14 !important;
+                      "
+                      title="Click to view full size"
+                    >
+                      <img
+                        id="waterTempImage"
+                        src=""
+                        alt="Water Temperature"
+                        class="clickable-image"
+                        style="display: none"
+                      />
+                      <div
+                        id="waterTempPlaceholder"
+                        class="text-center text-muted"
+                        style="
+                          display: block;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          flex-direction: column;
+                        "
+                      >
+                        <i class="fas fa-thermometer-half fa-2x mb-2"></i>
+                        <p class="small">Click "Load Water Temperature"</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Precipitation Analysis -->
+    <div class="col-lg-4 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-0 py-3">
+          <h5 class="card-title mb-0">
+            Further Analysis
+          </h5>
+        </div>
+        <div class="card-body">
+          <!-- Precipitation Toggle -->
+          <div class="form-check form-switch mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="precipitationToggle"
+            />
+            <label class="form-check-label fw-bold" for="precipitationToggle">
+              <i class="fas fa-cloud-rain me-2"></i>Show Precipitation Data
+            </label>
+          </div>
+
+          <!-- Water Temperature Toggle -->
+          <div class="form-check form-switch mb-4">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="waterTempToggle"
+            />
+            <label class="form-check-label fw-bold" for="waterTempToggle">
+              <i class="fas fa-thermometer-half me-2"></i>Show Water Temperature
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div
+    class="modal fade"
+    id="imageModal"
+    tabindex="-1"
+    aria-labelledby="imageModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-dark">
+        <div class="modal-header border-0">
+          <h5 class="modal-title text-white" id="imageModalLabel">
+            Image Preview
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-center p-0">
+          <img
+            id="modalImage"
+            src=""
+            alt="Full size image"
+            style="max-width: 100%; max-height: 85vh; object-fit: contain"
+          />
+        </div>
+        <div class="modal-footer border-0 justify-content-center">
+          <small class="text-white-50"
+            >Click outside or press ESC to close</small
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_styles %}
+<style>
+  /* Clickable image containers */
+  .clickable-image-container {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .clickable-image-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .clickable-image-container::after {
+    content: "\f065"; /* FontAwesome expand icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    font-size: 14px;
+  }
+
+  .clickable-image-container:hover::after {
+    opacity: 1;
+  }
+
+  .clickable-image {
+    cursor: pointer;
+  }
+
+  /* Modal styling */
+  #imageModal .modal-content {
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  #imageModal .modal-body {
+    padding: 1rem;
+  }
+
+  /* Smooth transitions for dynamic column layout */
+  #processedAnalysisCol,
+  #rawSatelliteCol,
+  #precipitationImageContainer,
+  #waterTempImageContainer {
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Additional responsive styling for better mobile experience */
+  @media (max-width: 768px) {
+    #processedAnalysisCol,
+    #rawSatelliteCol,
+    #precipitationImageContainer,
+    #waterTempImageContainer {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+
+    .clickable-image-container::after {
+      opacity: 1; /* Always show on mobile */
+    }
+  }
+</style>
+{% endblock %} {% block extra_scripts %}
+<style>
+  /* Consistent image heights and smooth transitions */
+  #processedAnalysisCol,
+  #rawSatelliteCol,
+  #precipitationImageContainer,
+  #waterTempImageContainer {
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Set consistent heights for all image containers */
+  #lakeWinnipegPlot,
+  #rawSatelliteImage,
+  #precipitationImage,
+  #waterTempImage {
+    width: 100% !important;
+    height: 300px !important;
+    object-fit: contain !important;
+    border: 1px solid #dee2e6;
+    background: #f8f9fa;
+  }
+
+  /* Ensure processed analysis and raw satellite images match exactly */
+  #lakeWinnipegPlot,
+  #rawSatelliteImage {
+    object-fit: cover !important;
+    object-position: center;
+  }
+
+  /* Image container styling for consistent appearance */
+  .image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .image-container img {
+    border-radius: 4px;
+  }
+
+  /* Ensure placeholder containers have the same height */
+  #precipitationPlaceholder,
+  #waterTempPlaceholder {
+    min-height: 300px !important;
+    height: 300px !important;
+  }
+
+  /* Container styling for consistent appearance */
+  .border.rounded.p-1 {
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    #lakeWinnipegPlot,
+    #rawSatelliteImage,
+    #precipitationImage,
+    #waterTempImage {
+      height: 250px !important;
+    }
+
+    #precipitationPlaceholder,
+    #waterTempPlaceholder {
+      min-height: 250px !important;
+      height: 250px !important;
+    }
+
+    .border.rounded.p-1,
+    .image-container {
+      min-height: 270px;
+    }
+
+    #processedAnalysisCol,
+    #rawSatelliteCol,
+    #precipitationImageContainer,
+    #waterTempImageContainer {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    #lakeWinnipegPlot,
+    #rawSatelliteImage,
+    #precipitationImage,
+    #waterTempImage {
+      height: 350px !important;
+    }
+
+    #precipitationPlaceholder,
+    #waterTempPlaceholder {
+      min-height: 350px !important;
+      height: 350px !important;
+    }
+
+    .border.rounded.p-1,
+    .image-container {
+      min-height: 370px;
+    }
+  }
+</style>
+
+<script>
+  // Lake data for selection
+  const lakes = {
+    winnipeg: {
+      name: "Lake Winnipeg",
+      endpoint: "/api/satellite/fetch",
+      bbox: [-101.273432, 50.075155, -96.060934, 54.171428],
+      description: "Manitoba, Canada - Major freshwater lake",
+    },
+    superior: {
+      name: "Lake Superior",
+      endpoint: "/api/satellite/fetch",
+      bbox: [-92.2, 46.4, -84.3, 49.0],
+      description: "Great Lakes - Largest freshwater lake",
+    },
+    huron: {
+      name: "Lake Huron",
+      endpoint: "/api/satellite/fetch",
+      bbox: [-84.8, 43.0, -79.7, 46.3],
+      description: "Great Lakes - Second largest",
+    },
+    michigan: {
+      name: "Lake Michigan",
+      endpoint: "/api/satellite/fetch",
+      bbox: [-87.8, 41.6, -84.8, 46.0],
+      description: "Great Lakes - Third largest",
+    },
+    erie: {
+      name: "Lake Erie",
+      endpoint: "/api/satellite/fetch",
+      bbox: [-83.5, 41.4, -78.9, 42.9],
+      description: "Great Lakes - Shallowest",
+    },
+    fundy: {
+      name: "Bay of Fundy",
+      endpoint: "/api/satellite/fetch",
+      bbox: [-66.8, 44.2, -63.8, 45.8],
+      description: "New Brunswick/Nova Scotia - Highest tides in the world",
+    },
+    stlawrence: {
+      name: "Gulf of Saint Lawrence",
+      endpoint: "/api/satellite/fetch",
+      bbox: [-70.0, 45.5, -57.0, 51.5],
+      description: "Quebec/Maritimes - Large gulf connecting to Atlantic Ocean",
+    },
+  };
+
+  // Function to calculate end date (1 month from start date)
+  function calculateEndDate(startDate) {
+    const date = new Date(startDate);
+    date.setMonth(date.getMonth() + 1); // Add 1 month
+    return date.toISOString();
+  }
+
+  // Function to get custom dates or use defaults
+  function getDateRange() {
+    const dateInput = document.getElementById("analysisDate");
+    if (dateInput && dateInput.value) {
+      const startDate = new Date(dateInput.value + "T10:00:00Z").toISOString();
+      const endDate = calculateEndDate(dateInput.value + "T10:00:00Z");
+      return { start_date: startDate, end_date: endDate };
+    }
+    // Default dates if no custom date selected
+    return {
+      start_date: "2022-08-01T10:00:00Z",
+      end_date: "2022-09-01T22:00:00Z",
+    };
+  }
+
+  // Function to load lake image (both processed and raw)
+  function loadLakeImage(lakeKey) {
+    const lake = lakes[lakeKey];
+    const plotLoader = document.getElementById("plotLoader");
+    const lakeImage = document.getElementById("lakeWinnipegPlot");
+    const rawImage = document.getElementById("rawSatelliteImage");
+    const spinner = plotLoader.querySelector(".spinner-border");
+    const loadingText = plotLoader.querySelector("p");
+
+    // Reset loader state
+    spinner.style.display = "block";
+    loadingText.className = "text-muted small mt-2";
+    loadingText.textContent = `Loading ${lake.name} analysis...`;
+
+    // Show loader overlay and hide images
+    plotLoader.style.display = "flex";
+    plotLoader.style.visibility = "visible";
+    plotLoader.style.opacity = "1";
+    lakeImage.style.display = "none";
+    lakeImage.style.opacity = "0";
+    rawImage.style.display = "none";
+    rawImage.style.opacity = "0";
+
+    // Clear any existing image URLs to prevent memory leaks
+    if (lakeImage.src.startsWith("blob:")) {
+      URL.revokeObjectURL(lakeImage.src);
+    }
+    if (rawImage.src.startsWith("blob:")) {
+      URL.revokeObjectURL(rawImage.src);
+    }
+    lakeImage.src = "";
+    rawImage.src = "";
+
+    // Get custom date range
+    const dateRange = getDateRange();
+    console.log(`Loading ${lake.name} with date range:`, dateRange);
+
+    const requestPayload = {
+      bbox: lake.bbox,
+      start_date: dateRange.start_date,
+      end_date: dateRange.end_date,
+    };
+
+    // Fetch both processed and raw images in parallel
+    const processedImagePromise = fetch(lake.endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestPayload),
+    });
+
+    const rawImagePromise = fetch("/api/satellite/raw-image", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestPayload),
+    });
+
+    // Handle both requests
+    Promise.all([processedImagePromise, rawImagePromise])
+      .then(async ([processedResponse, rawResponse]) => {
+        // Check if both responses are successful
+        if (!processedResponse.ok) {
+          throw new Error(
+            `Processed image: HTTP ${processedResponse.status}: ${processedResponse.statusText}`
+          );
+        }
+        if (!rawResponse.ok) {
+          throw new Error(
+            `Raw image: HTTP ${rawResponse.status}: ${rawResponse.statusText}`
+          );
+        }
+
+        // Convert both responses to blobs
+        const [processedBlob, rawBlob] = await Promise.all([
+          processedResponse.blob(),
+          rawResponse.blob(),
+        ]);
+
+        // Create object URLs for both images
+        const processedImageUrl = URL.createObjectURL(processedBlob);
+        const rawImageUrl = URL.createObjectURL(rawBlob);
+
+        // Set image sources and alt text
+        lakeImage.src = processedImageUrl;
+        lakeImage.alt = `${lake.name} Processed Analysis`;
+        rawImage.src = rawImageUrl;
+        rawImage.alt = `${lake.name} Raw Satellite Image`;
+
+        // Track loading completion
+        let loadedCount = 0;
+        const totalImages = 2;
+
+        function checkAllLoaded() {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            // COMPLETELY hide loader and show both images
+            plotLoader.style.display = "none";
+            plotLoader.style.visibility = "hidden";
+            plotLoader.style.opacity = "0";
+            lakeImage.style.display = "block";
+            lakeImage.style.opacity = "1";
+            rawImage.style.display = "block";
+            rawImage.style.opacity = "1";
+            console.log("Both images loaded successfully, loader hidden");
+            
+            // Auto-reload precipitation and water temp data if toggles are enabled
+            if (precipitationEnabled) {
+              loadPrecipitationData();
+            }
+            if (waterTempEnabled) {
+              loadWaterTemperatureData();
+            }
+          }
+        }
+
+        // Handle image load events
+        lakeImage.onload = checkAllLoaded;
+        rawImage.onload = checkAllLoaded;
+
+        // Handle image load errors
+        lakeImage.onerror = function () {
+          console.error("Processed image failed to load");
+          checkAllLoaded(); // Still proceed even if one image fails
+        };
+
+        rawImage.onerror = function () {
+          console.error("Raw image failed to load");
+          checkAllLoaded(); // Still proceed even if one image fails
+        };
+      })
+      .catch((error) => {
+        console.error("Error loading lake images:", error);
+        // COMPLETELY hide loader on error too
+        plotLoader.style.display = "none";
+        plotLoader.style.visibility = "hidden";
+        plotLoader.style.opacity = "0";
+      });
+  }
+
+  // Variable to track current lake selection
+  let currentLakeKey = "winnipeg";
+
+  // Load Lake Winnipeg by default when page loads
+  document.addEventListener("DOMContentLoaded", function () {
+    loadLakeImage("winnipeg");
+  });
+
+  // Add click handlers for lake selection
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".lake-option").forEach((option) => {
+      option.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // Remove active class from all options
+        document.querySelectorAll(".lake-option").forEach((opt) => {
+          opt.classList.remove("active");
+        });
+
+        // Add active class to clicked option
+        this.classList.add("active");
+
+        // Load the selected lake
+        const lakeKey = this.dataset.lake;
+        currentLakeKey = lakeKey; // Track current selection
+        loadLakeImage(lakeKey);
+      });
+    });
+
+    // Add event handler for refresh button
+    const refreshBtn = document.getElementById("refreshAnalysis");
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        console.log(
+          "Refreshing analysis with new date:",
+          document.getElementById("analysisDate").value
+        );
+        loadLakeImage(currentLakeKey); // Reload current lake with new date
+      });
+    }
+
+    // Add event handler for date input change
+    const dateInput = document.getElementById("analysisDate");
+    if (dateInput) {
+      dateInput.addEventListener("change", function () {
+        const selectedDate = new Date(this.value);
+        const endDate = new Date(selectedDate);
+        endDate.setMonth(endDate.getMonth() + 1);
+
+        console.log(
+          "Selected date range:",
+          this.value,
+          "to",
+          endDate.toISOString().split("T")[0]
+        );
+      });
+    }
+
+    // Add precipitation event handlers
+    const precipitationToggle = document.getElementById("precipitationToggle");
+    if (precipitationToggle) {
+      precipitationToggle.addEventListener(
+        "change",
+        togglePrecipitationControls
+      );
+    }
+
+    const loadPrecipitationBtn = document.getElementById(
+      "loadPrecipitationBtn"
+    );
+    if (loadPrecipitationBtn) {
+      loadPrecipitationBtn.addEventListener("click", loadPrecipitationData);
+    }
+
+    // Add water temperature event handlers
+    const waterTempToggle = document.getElementById("waterTempToggle");
+    if (waterTempToggle) {
+      waterTempToggle.addEventListener("change", toggleWaterTempControls);
+    }
+
+    const loadWaterTempBtn = document.getElementById("loadWaterTempBtn");
+    if (loadWaterTempBtn) {
+      loadWaterTempBtn.addEventListener("click", loadWaterTemperatureData);
+    }
+  });
+
+  // Layout management function - dynamic layout with hidden/shown columns
+  // Layout management function - dynamic layout with hidden/shown columns
+  function updateAdditionalAnalysisLayout() {
+    const precipContainer = document.getElementById("precipitationImageContainer");
+    const tempContainer = document.getElementById("waterTempImageContainer");
+    const processedCol = document.getElementById("processedAnalysisCol");
+    const rawSatelliteCol = document.getElementById("rawSatelliteCol");
+
+    // Use the enabled flags to determine visibility
+    const precipActive = precipitationEnabled;
+    const tempActive = waterTempEnabled;
+
+    console.log("Layout update - Precip enabled:", precipActive, "Temp enabled:", tempActive);
+
+    // Show/hide additional analysis containers
+    precipContainer.style.display = precipActive ? "block" : "none";
+    tempContainer.style.display = tempActive ? "block" : "none";
+
+    // Adjust main column sizes based on how many additional columns are shown
+    const additionalColumnsCount = (precipActive ? 1 : 0) + (tempActive ? 1 : 0);
+
+    if (additionalColumnsCount === 0) {
+      // No additional columns - main columns take full width (6 columns each)
+      processedCol.className = "col-md-6";
+      rawSatelliteCol.className = "col-md-6";
+    } else if (additionalColumnsCount === 1) {
+      // One additional column - main columns take 4.5 each, additional takes 3
+      processedCol.className = "col-md-4";
+      rawSatelliteCol.className = "col-md-5";
+      precipContainer.className = precipActive ? "col-md-3" : "col-md-3";
+      tempContainer.className = tempActive ? "col-md-3" : "col-md-3";
+    } else {
+      // Both additional columns - all columns take 3 each (4-column layout)
+      processedCol.className = "col-md-3";
+      rawSatelliteCol.className = "col-md-3";
+      precipContainer.className = "col-md-3";
+      tempContainer.className = "col-md-3";
+    }
+  }
+
+  // Precipitation functionality
+  let precipitationEnabled = false;
+
+  function togglePrecipitationControls() {
+    const toggle = document.getElementById("precipitationToggle");
+    const imageContainer = document.getElementById("precipitationImageContainer");
+    const label = toggle.nextElementSibling;
+
+    precipitationEnabled = toggle.checked;
+
+    if (precipitationEnabled) {
+      label.innerHTML = '<i class="fas fa-cloud-rain me-2"></i>Precipitation Data (Loading...)';
+      label.style.color = "#0066cc";
+      
+      // Auto-load precipitation data
+      loadPrecipitationData();
+    } else {
+      label.innerHTML = '<i class="fas fa-cloud-rain me-2"></i>Show Precipitation Data';
+      label.style.color = "";
+
+      // Clear precipitation image and show placeholder
+      const precipImage = document.getElementById("precipitationImage");
+      const placeholder = document.getElementById("precipitationPlaceholder");
+      precipImage.src = "";
+      precipImage.style.display = "none";
+      if (placeholder) placeholder.style.display = "block";
+
+      updateAdditionalAnalysisLayout();
+    }
+  }
+
+  function loadPrecipitationData() {
+    if (!currentLakeKey || !precipitationEnabled) return;
+
+    const precipImage = document.getElementById("precipitationImage");
+    const placeholder = document.getElementById("precipitationPlaceholder");
+    const label = document.getElementById("precipitationToggle").nextElementSibling;
+
+    // Show loading state
+    placeholder.innerHTML = '<div class="text-center"><div class="spinner-border spinner-border-sm text-primary mb-2"></div><p class="small">Loading precipitation data...</p></div>';
+    precipImage.style.display = "none";
+
+    const lake = lakes[currentLakeKey];
+    
+    // Use the same date as satellite analysis
+    const dateRange = getDateRange();
+    const startDate = new Date(dateRange.start_date);
+    const year = startDate.getFullYear();
+    const month = startDate.getMonth() + 1; // JavaScript months are 0-indexed
+
+    const requestPayload = {
+      bbox: lake.bbox,
+      year: year,
+      month: month,
+      location_name: lake.name,
+    };
+
+    console.log("Loading precipitation data for:", year, month); // Debug log
+
+    fetch("/api/precipitation/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestPayload),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            throw new Error(
+              errorData.message ||
+                errorData.error ||
+                `HTTP ${response.status}: ${response.statusText}`
+            );
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.success && data.data.image_base64) {
+          console.log("Precipitation image loaded, updating display");
+
+          // Display the precipitation image
+          precipImage.src = "data:image/png;base64," + data.data.image_base64;
+          precipImage.style.display = "block";
+          placeholder.style.display = "none";
+
+          // Update label to show loaded state
+          label.innerHTML = '<i class="fas fa-cloud-rain me-2"></i>Precipitation Data (Loaded)';
+          
+          // Ensure container is visible and update layout
+          updateAdditionalAnalysisLayout();
+
+        } else {
+          throw new Error(data.message || "Invalid response format");
+        }
+      })
+      .catch((error) => {
+        console.error("Error loading precipitation data:", error);
+        
+        // Show error state
+        placeholder.innerHTML = `<div class="text-center text-danger">
+          <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+          <p class="small">Failed to load precipitation data</p>
+          <button class="btn btn-outline-primary btn-sm mt-1" onclick="loadPrecipitationData()">Retry</button>
+        </div>`;
+        
+        // Update label to show error state
+        label.innerHTML = '<i class="fas fa-cloud-rain me-2"></i>Precipitation Data (Error)';
+        label.style.color = "#dc3545";
+      });
+  }
+
+
+  // Water temperature functionality
+  let waterTempEnabled = false;
+
+  function toggleWaterTempControls() {
+    const toggle = document.getElementById("waterTempToggle");
+    const imageContainer = document.getElementById("waterTempImageContainer");
+    const label = toggle.nextElementSibling;
+
+    waterTempEnabled = toggle.checked;
+
+    if (waterTempEnabled) {
+      label.innerHTML = '<i class="fas fa-thermometer-half me-2"></i>Water Temperature (Loading...)';
+      label.style.color = "#ff6600";
+      
+      // Auto-load water temperature data
+      loadWaterTemperatureData();
+    } else {
+      label.innerHTML = '<i class="fas fa-thermometer-half me-2"></i>Show Water Temperature';
+      label.style.color = "";
+
+      // Clear water temperature image and show placeholder
+      const tempImage = document.getElementById("waterTempImage");
+      const placeholder = document.getElementById("waterTempPlaceholder");
+      tempImage.src = "";
+      tempImage.style.display = "none";
+      if (placeholder) placeholder.style.display = "block";
+
+      updateAdditionalAnalysisLayout();
+    }
+  }
+
+  function loadWaterTemperatureData() {
+    if (!currentLakeKey || !waterTempEnabled) return;
+
+    const tempImage = document.getElementById("waterTempImage");
+    const placeholder = document.getElementById("waterTempPlaceholder");
+    const label = document.getElementById("waterTempToggle").nextElementSibling;
+
+    // Show loading state
+    placeholder.innerHTML = '<div class="text-center"><div class="spinner-border spinner-border-sm text-warning mb-2"></div><p class="small">Loading water temperature...</p></div>';
+    tempImage.style.display = "none";
+
+    const lake = lakes[currentLakeKey];
+    
+    // Use the same date range as satellite analysis
+    const dateRange = getDateRange();
+
+    const requestPayload = {
+      bbox: lake.bbox,
+      start_date: dateRange.start_date,
+      end_date: dateRange.end_date,
+      location_name: lake.name,
+    };
+
+    console.log("Loading water temperature data for date range:", dateRange); // Debug log
+
+    fetch("/api/water-temperature/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestPayload),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            throw new Error(
+              errorData.message ||
+                errorData.error ||
+                `HTTP ${response.status}: ${response.statusText}`
+            );
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Water temperature response:", data);
+
+        if (data.success && data.data && data.data.image_base64) {
+          console.log("Water temperature image loaded, updating display");
+
+          // Display the water temperature image
+          tempImage.src = "data:image/png;base64," + data.data.image_base64;
+          tempImage.style.display = "block";
+          placeholder.style.display = "none";
+
+          // Update label to show loaded state
+          label.innerHTML = '<i class="fas fa-thermometer-half me-2"></i>Water Temperature (Loaded)';
+          
+          // Ensure container is visible and update layout
+          updateAdditionalAnalysisLayout();
+
+        } else {
+          throw new Error(data.message || "Invalid response format");
+        }
+      })
+      .catch((error) => {
+        console.error("Error loading water temperature data:", error);
+        
+        // Show error state
+        placeholder.innerHTML = `<div class="text-center text-danger">
+          <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+          <p class="small">Failed to load water temperature</p>
+          <button class="btn btn-outline-primary btn-sm mt-1" onclick="loadWaterTemperatureData()">Retry</button>
+        </div>`;
+        
+        // Update label to show error state
+        label.innerHTML = '<i class="fas fa-thermometer-half me-2"></i>Water Temperature (Error)';
+        label.style.color = "#dc3545";
+      });
+  }
+
+  // Add some interactivity to stat cards
+  document.querySelectorAll(".stats-card").forEach((card) => {
+    card.addEventListener("mouseenter", function () {
+      this.style.transform = "translateY(-2px)";
+      this.style.transition = "transform 0.2s ease";
+    });
+
+    card.addEventListener("mouseleave", function () {
+      this.style.transform = "translateY(0)";
+    });
+  });
+
+  // Image modal functionality
+  document.addEventListener("DOMContentLoaded", function () {
+    const modal = new bootstrap.Modal(document.getElementById("imageModal"));
+    const modalImage = document.getElementById("modalImage");
+    const modalLabel = document.getElementById("imageModalLabel");
+
+    // Add click handlers to all clickable images
+    function setupImageClick(imageId, title) {
+      const image = document.getElementById(imageId);
+      const container = image.closest(".clickable-image-container");
+
+      if (container) {
+        container.addEventListener("click", function () {
+          // Only open modal if image is loaded and visible
+          if (image.src && image.style.display !== "none") {
+            modalImage.src = image.src;
+            modalImage.alt = image.alt;
+            modalLabel.textContent = title || image.alt;
+            modal.show();
+          }
+        });
+      }
+    }
+
+    // Setup click handlers for all images
+    setupImageClick("lakeWinnipegPlot", "Processed Analysis - Full View");
+    setupImageClick("rawSatelliteImage", "Raw Satellite Image - Full View");
+    setupImageClick("precipitationImage", "Precipitation Analysis - Full View");
+    setupImageClick("waterTempImage", "Water Temperature - Full View");
+
+    // Close modal on ESC key
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        modal.hide();
+      }
+    });
+  });
+</script>
+{% endblock %}

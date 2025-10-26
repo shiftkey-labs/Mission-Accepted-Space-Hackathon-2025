@@ -12,7 +12,7 @@ By combining satellite Earth Observation data with data feeds, and applying **ma
 ---
 
 ## Data Sources  
-- **Satellite AIS (Automatic Identification System)** → Ship positions and routes.  https://globalfishingwatch.org/
+- **Satellite AIS (Automatic Identification System)** → Ship positions and routes.  https://globalfishingwatch.org/ (which uses candian RADARSAT-2 data)
 - **Tagging datasets (DFO/WWF)** → Leatherback turtle migration corridors.  https://open.canada.ca/data/dataset/7d187ff6-19f9-4f57-9de3-bd38ab760643
   
 ## Approach  
@@ -29,3 +29,11 @@ By combining satellite Earth Observation data with data feeds, and applying **ma
    - Identify safer shipping corridors away from sensitive habitats.  
    - Inform conservation policy for marine ecosystems.  
    - Support shoreline protection by reducing human-caused pressure.  
+
+**Team Members**
+- Rehab Shakir - [LinkedIn](www.linkedin.com/in/rehabshakir)
+- [Email](rehabshakir2@gmail.com)
+- Tanishka Ghosh - [LinkedIn](https://www.linkedin.com/in/tanishka-ghosh)
+- [Email](tn620502@dal.ca)
+- Link to repo:
+(https://github.com/Tanishka-G/geospatial-app-vite)

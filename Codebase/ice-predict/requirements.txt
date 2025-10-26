@@ -1,0 +1,6 @@
+geopandas
+matplotlib
+rasterio
+beautifulsoup4
+requests
+torch

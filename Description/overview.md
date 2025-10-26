@@ -103,9 +103,9 @@ The project was developed during the **Mission Accepted: Space Hackathon 2025** 
 
 | Resource | Link |
 |-----------|------|
-| **Live Deployment** | [https://satellocator-frontend.vercel.app/](#) |
-| **Frontend Repository** | [https://github.com/CodeBreaker2712/SatelLocator_Frontend](#) |
-| **Backend Repository** | [https://github.com/CodeBreaker2712/SatelLocator](#) |
+| **Live Deployment** | (https://satellocator-frontend.vercel.app/) |
+| **Frontend Repository** | (https://github.com/CodeBreaker2712/SatelLocator_Frontend) |
+| **Backend Repository** | (https://github.com/CodeBreaker2712/SatelLocator) |
 
 ## ⚙️ Setup & Run
 

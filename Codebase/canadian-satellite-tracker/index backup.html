@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canadian Satellite Tracker | Suivi des satellites canadiens</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-gray-400-rgb: 119, 124, 124;
+            --color-teal-300-rgb: 50, 184, 198;
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300), 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+                --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            font-size: var(--font-size-base);
+            line-height: 1.5;
+        }
+
+        .header {
+            background-color: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--space-16) var(--space-24);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-16);
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+        }
+
+        .header-title h1 {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .flag {
+            font-size: var(--font-size-3xl);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: var(--space-12);
+            align-items: center;
+        }
+
+        .lang-toggle {
+            background: var(--color-secondary);
+            border: 1px solid var(--color-border);
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            font-size: var(--font-size-base);
+            color: var(--color-text);
+            transition: all 0.2s;
+        }
+
+        .lang-toggle:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        .stats-bar {
+            background: var(--color-surface);
+            padding: var(--space-12) var(--space-24);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            gap: var(--space-24);
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .stat-value {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .main-container {
+            display: flex;
+            height: calc(100vh - 140px);
+        }
+
+        .sidebar {
+            width: 350px;
+            background: var(--color-surface);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .search-section {
+            padding: var(--space-16);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: var(--space-8) var(--space-12);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            background: var(--color-background);
+            color: var(--color-text);
+            font-size: var(--font-size-base);
+        }
+
+        .search-input:focus {
+            outline: 2px solid var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .filters {
+            display: flex;
+            gap: var(--space-8);
+            margin-top: var(--space-12);
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--color-border);
+            background: var(--color-background);
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            color: var(--color-text);
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .satellite-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-12);
+        }
+
+        .satellite-card {
+            background: var(--color-background);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-base);
+            padding: var(--space-12);
+            margin-bottom: var(--space-8);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .satellite-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-primary);
+        }
+
+        .satellite-card.selected {
+            border-color: var(--color-primary);
+            background: rgba(var(--color-teal-500-rgb), 0.05);
+        }
+
+        .satellite-card.featured {
+            border: 2px solid var(--color-primary);
+            background: rgba(var(--color-teal-500-rgb), 0.08);
+        }
+
+        .satellite-name {
+            font-weight: 600;
+            font-size: var(--font-size-base);
+            color: var(--color-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: rgba(var(--color-teal-500-rgb), 0.15);
+            color: var(--color-primary);
+        }
+
+        .status-inactive {
+            background: rgba(var(--color-gray-400-rgb), 0.15);
+            color: var(--color-text-secondary);
+        }
+
+        .satellite-info {
+            margin-top: var(--space-8);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .detail-panel {
+            width: 400px;
+            background: var(--color-surface);
+            border-left: 1px solid var(--color-border);
+            overflow-y: auto;
+            padding: var(--space-24);
+            display: none;
+        }
+
+        .detail-panel.active {
+            display: block;
+        }
+
+        .detail-header {
+            margin-bottom: var(--space-20);
+        }
+
+        .detail-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+        }
+
+        .detail-section {
+            margin-bottom: var(--space-24);
+        }
+
+        .detail-section h3 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--space-12);
+            color: var(--color-text);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-8) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .detail-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .detail-value {
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .loading {
+            text-align: center;
+            padding: var(--space-20);
+            color: var(--color-text-secondary);
+        }
+
+        .pass-prediction {
+            background: var(--color-background);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-base);
+            padding: var(--space-12);
+            margin-top: var(--space-12);
+        }
+
+        .location-selector {
+            margin-bottom: var(--space-12);
+        }
+
+        .location-selector select {
+            width: 100%;
+            padding: var(--space-8);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            background: var(--color-background);
+            color: var(--color-text);
+            font-size: var(--font-size-sm);
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+                height: auto;
+            }
+            .sidebar {
+                width: 100%;
+                max-height: 300px;
+            }
+            .map-container {
+                height: 400px;
+            }
+            .detail-panel {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">
+            <span class="flag">🇨🇦</span>
+            <h1 id="main-title">Canadian Satellite Tracker</h1>
+        </div>
+        <div class="header-controls">
+            <button class="lang-toggle" id="lang-toggle">Français</button>
+        </div>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat">
+            <span class="stat-label" data-i18n="total-satellites">Total Satellites</span>
+            <span class="stat-value" id="stat-total">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label" data-i18n="active">Active</span>
+            <span class="stat-value" id="stat-active">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label" data-i18n="tracking">Tracking</span>
+            <span class="stat-value" id="stat-tracking">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label" data-i18n="last-update">Last Update</span>
+            <span class="stat-value" id="stat-update">--:--</span>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="search-section">
+                <input type="text" class="search-input" id="search-input" placeholder="Search satellites..." data-i18n-placeholder="search-placeholder">
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all" data-i18n="filter-all">All</button>
+                    <button class="filter-btn" data-filter="active" data-i18n="filter-active">Active</button>
+                    <button class="filter-btn" data-filter="featured" data-i18n="filter-featured">Featured</button>
+                </div>
+            </div>
+            <div class="satellite-list" id="satellite-list">
+                <div class="loading" data-i18n="loading">Loading satellites...</div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div class="detail-panel" id="detail-panel">
+            <div class="detail-header">
+                <h2 class="detail-title" id="detail-name">Select a satellite</h2>
+                <div id="detail-status"></div>
+            </div>
+            
+            <div class="detail-section">
+                <h3 data-i18n="mission-info">Mission Information</h3>
+                <div id="mission-details"></div>
+            </div>
+
+            <div class="detail-section">
+                <h3 data-i18n="orbital-parameters">Orbital Parameters</h3>
+                <div id="orbital-details"></div>
+            </div>
+
+            <div class="detail-section">
+                <h3 data-i18n="pass-predictions">Pass Predictions</h3>
+                <div class="location-selector">
+                    <select id="location-select">
+                        <option value="">Select location / Sélectionner l'emplacement</option>
+                        <option value="45.5017,-73.5673">Montreal / Montréal</option>
+                        <option value="43.6532,-79.3832">Toronto</option>
+                        <option value="49.2827,-123.1207">Vancouver</option>
+                        <option value="45.4215,-75.6972">Ottawa</option>
+                        <option value="51.0447,-114.0719">Calgary</option>
+                        <option value="53.5461,-113.4938">Edmonton</option>
+                        <option value="49.8951,-97.1384">Winnipeg</option>
+                        <option value="46.8139,-71.2080">Quebec City / Ville de Québec</option>
+                    </select>
+                </div>
+                <div class="pass-prediction" id="pass-details">
+                    <div class="detail-label" data-i18n="select-location">Select a location to see pass predictions</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/satellite.js@5.0.0/dist/satellite.min.js"></script>
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                'main-title': 'Canadian Satellite Tracker',
+                'total-satellites': 'Total Satellites',
+                'active': 'Active',
+                'tracking': 'Tracking',
+                'last-update': 'Last Update',
+                'search-placeholder': 'Search satellites...',
+                'filter-all': 'All',
+                'filter-active': 'Active',
+                'filter-featured': 'Featured',
+                'loading': 'Loading satellites...',
+                'mission-info': 'Mission Information',
+                'orbital-parameters': 'Orbital Parameters',
+                'pass-predictions': 'Pass Predictions',
+                'select-location': 'Select a location to see pass predictions',
+                'launch-date': 'Launch Date',
+                'years-in-orbit': 'Years in Orbit',
+                'norad-id': 'NORAD ID',
+                'mission-type': 'Mission Type',
+                'operator': 'Operator',
+                'altitude': 'Altitude',
+                'velocity': 'Velocity',
+                'latitude': 'Latitude',
+                'longitude': 'Longitude',
+                'period': 'Period',
+                'status': 'Status',
+                'active-status': 'Active',
+                'inactive-status': 'Inactive',
+                'next-pass': 'Next Pass',
+                'duration': 'Duration',
+                'max-elevation': 'Max Elevation',
+                'minutes': 'minutes'
+            },
+            fr: {
+                'main-title': 'Suivi des satellites canadiens',
+                'total-satellites': 'Satellites totaux',
+                'active': 'Actifs',
+                'tracking': 'Suivi',
+                'last-update': 'Dernière mise à jour',
+                'search-placeholder': 'Rechercher des satellites...',
+                'filter-all': 'Tous',
+                'filter-active': 'Actifs',
+                'filter-featured': 'En vedette',
+                'loading': 'Chargement des satellites...',
+                'mission-info': 'Informations sur la mission',
+                'orbital-parameters': 'Paramètres orbitaux',
+                'pass-predictions': 'Prédictions de passage',
+                'select-location': 'Sélectionnez un emplacement pour voir les prédictions de passage',
+                'launch-date': 'Date de lancement',
+                'years-in-orbit': 'Années en orbite',
+                'norad-id': 'ID NORAD',
+                'mission-type': 'Type de mission',
+                'operator': 'Opérateur',
+                'altitude': 'Altitude',
+                'velocity': 'Vitesse',
+                'latitude': 'Latitude',
+                'longitude': 'Longitude',
+                'period': 'Période',
+                'status': 'Statut',
+                'active-status': 'Actif',
+                'inactive-status': 'Inactif',
+                'next-pass': 'Prochain passage',
+                'duration': 'Durée',
+                'max-elevation': 'Élévation maximale',
+                'minutes': 'minutes'
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            
+            // Update all i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+
+            // Update toggle button
+            document.getElementById('lang-toggle').textContent = lang === 'en' ? 'Français' : 'English';
+            
+            // Refresh detail panel if open
+            if (selectedSatellite) {
+                showSatelliteDetails(selectedSatellite);
+            }
+        }
+
+        // Canadian satellites database
+        const canadianSatellites = [
+            { name: 'RADARSAT-2', noradId: 32382, launchYear: 2007, status: 'active', type: 'Earth Observation', operator: 'MDA', featured: true },
+            { name: 'SAPPHIRE', noradId: 39089, launchYear: 2013, status: 'active', type: 'Space Surveillance', operator: 'DND/MDA', featured: true },
+            { name: 'RCM-1', noradId: 44322, launchYear: 2019, status: 'active', type: 'Earth Observation', operator: 'CSA' },
+            { name: 'RCM-2', noradId: 44323, launchYear: 2019, status: 'active', type: 'Earth Observation', operator: 'CSA' },
+            { name: 'RCM-3', noradId: 44324, launchYear: 2019, status: 'active', type: 'Earth Observation', operator: 'CSA' },
+            { name: 'NEOSSat', noradId: 39162, launchYear: 2013, status: 'active', type: 'Space Surveillance', operator: 'CSA/DRDC' },
+            { name: 'CASSIOPE', noradId: 39265, launchYear: 2013, status: 'active', type: 'Communications/Science', operator: 'CSA' },
+            { name: 'M3MSat', noradId: 41605, launchYear: 2016, status: 'active', type: 'Maritime Monitoring', operator: 'CSA' },
+            { name: 'Anik F1R', noradId: 28868, launchYear: 2005, status: 'active', type: 'Communications', operator: 'Telesat' },
+            { name: 'Anik F2', noradId: 26720, launchYear: 2004, status: 'active', type: 'Communications', operator: 'Telesat' },
+            { name: 'Anik F3', noradId: 31102, launchYear: 2007, status: 'active', type: 'Communications', operator: 'Telesat' },
+            { name: 'Anik G1', noradId: 39127, launchYear: 2013, status: 'active', type: 'Communications', operator: 'Telesat' },
+            { name: 'Nimiq 5', noradId: 35696, launchYear: 2009, status: 'active', type: 'Communications', operator: 'Telesat' },
+            { name: 'Nimiq 6', noradId: 38070, launchYear: 2012, status: 'active', type: 'Communications', operator: 'Telesat' },
+            { name: 'SCISAT-1', noradId: 27858, launchYear: 2003, status: 'active', type: 'Atmospheric Science', operator: 'CSA' },
+            { name: 'MOST', noradId: 27843, launchYear: 2003, status: 'inactive', type: 'Space Telescope', operator: 'CSA' },
+            { name: 'Alouette-2', noradId: 1804, launchYear: 1965, status: 'inactive', type: 'Scientific', operator: 'CSA' },
+            { name: 'ISIS-1', noradId: 3669, launchYear: 1969, status: 'inactive', type: 'Scientific', operator: 'CSA' },
+            { name: 'ISIS-2', noradId: 4880, launchYear: 1971, status: 'inactive', type: 'Scientific', operator: 'CSA' }
+        ];
+
+        // Global state
+        let map, satellites = [], satelliteMarkers = {}, selectedSatellite = null;
+        let tleData = {};
+        let updateInterval;
+
+        // Initialize map
+        function initMap() {
+            map = L.map('map', {
+                center: [56.1304, -106.3468], // Center of Canada
+                zoom: 3,
+                minZoom: 2,
+                maxZoom: 10
+            });
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+        }
+
+        // Fetch TLE data from CelesTrak
+        async function fetchTLEData() {
+            try {
+                const noradIds = canadianSatellites.map(s => s.noradId);
+                const tlePromises = noradIds.map(async (id) => {
+                    try {
+                        const response = await fetch(`https://celestrak.org/NORAD/elements/gp.php?CATNR=${id}&FORMAT=TLE`);
+                        const text = await response.text();
+                        const lines = text.trim().split('\n');
+                        if (lines.length >= 3) {
+                            return {
+                                id: id,
+                                name: lines[0].trim(),
+                                line1: lines[1],
+                                line2: lines[2]
+                            };
+                        }
+                    } catch (e) {
+                        console.error(`Error fetching TLE for ${id}:`, e);
+                    }
+                    return null;
+                });
+
+                const results = await Promise.all(tlePromises);
+                results.forEach(tle => {
+                    if (tle) {
+                        tleData[tle.id] = tle;
+                    }
+                });
+
+                updateSatellitePositions();
+                updateStats();
+            } catch (error) {
+                console.error('Error fetching TLE data:', error);
+            }
+        }
+
+        // Calculate satellite position
+        function getSatellitePosition(tle) {
+            try {
+                const satrec = satellite.twoline2satrec(tle.line1, tle.line2);
+                const date = new Date();
+                const positionAndVelocity = satellite.propagate(satrec, date);
+                
+                if (positionAndVelocity.position) {
+                    const gmst = satellite.gstime(date);
+                    const geodeticCoords = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
+                    
+                    return {
+                        latitude: satellite.degreesLat(geodeticCoords.latitude),
+                        longitude: satellite.degreesLong(geodeticCoords.longitude),
+                        altitude: geodeticCoords.height,
+                        velocity: positionAndVelocity.velocity
+                    };
+                }
+            } catch (e) {
+                console.error('Error calculating position:', e);
+            }
+            return null;
+        }
+
+        // Update satellite positions on map
+        function updateSatellitePositions() {
+            let trackingCount = 0;
+
+            canadianSatellites.forEach(sat => {
+                const tle = tleData[sat.noradId];
+                if (tle) {
+                    const position = getSatellitePosition(tle);
+                    if (position) {
+                        trackingCount++;
+                        
+                        if (!satelliteMarkers[sat.noradId]) {
+                            const icon = L.divIcon({
+                                className: 'satellite-marker',
+                                html: `<div style="width: 12px; height: 12px; background: ${sat.featured ? '#32B8C6' : sat.status === 'active' ? '#21808D' : '#777'}; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 4px rgba(0,0,0,0.3);"></div>`,
+                                iconSize: [12, 12]
+                            });
+                            
+                            const marker = L.marker([position.latitude, position.longitude], { icon })
+                                .addTo(map)
+                                .bindPopup(`<strong>${sat.name}</strong><br>NORAD: ${sat.noradId}`);
+                            
+                            marker.on('click', () => {
+                                selectSatellite(sat);
+                            });
+                            
+                            satelliteMarkers[sat.noradId] = marker;
+                        } else {
+                            satelliteMarkers[sat.noradId].setLatLng([position.latitude, position.longitude]);
+                        }
+                        
+                        sat.position = position;
+                    }
+                }
+            });
+
+            document.getElementById('stat-tracking').textContent = trackingCount;
+            document.getElementById('stat-update').textContent = new Date().toLocaleTimeString();
+
+            if (selectedSatellite) {
+                showSatelliteDetails(selectedSatellite);
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            const total = canadianSatellites.length;
+            const active = canadianSatellites.filter(s => s.status === 'active').length;
+            
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-active').textContent = active;
+        }
+
+        // Render satellite list
+        function renderSatelliteList(filter = 'all', search = '') {
+            const listContainer = document.getElementById('satellite-list');
+            const filtered = canadianSatellites.filter(sat => {
+                const matchesFilter = filter === 'all' || 
+                    (filter === 'active' && sat.status === 'active') ||
+                    (filter === 'featured' && sat.featured);
+                const matchesSearch = sat.name.toLowerCase().includes(search.toLowerCase()) ||
+                    sat.type.toLowerCase().includes(search.toLowerCase());
+                return matchesFilter && matchesSearch;
+            });
+
+            // Sort: featured first, then by name
+            filtered.sort((a, b) => {
+                if (a.featured && !b.featured) return -1;
+                if (!a.featured && b.featured) return 1;
+                return a.name.localeCompare(b.name);
+            });
+
+            listContainer.innerHTML = filtered.map(sat => {
+                const yearsInOrbit = new Date().getFullYear() - sat.launchYear;
+                const statusText = currentLang === 'en' ? 
+                    (sat.status === 'active' ? 'Active' : 'Inactive') :
+                    (sat.status === 'active' ? 'Actif' : 'Inactif');
+                
+                return `
+                    <div class="satellite-card ${sat.featured ? 'featured' : ''} ${selectedSatellite?.noradId === sat.noradId ? 'selected' : ''}" 
+                         data-norad="${sat.noradId}">
+                        <div class="satellite-name">
+                            ${sat.name}
+                            <span class="status-badge status-${sat.status}">${statusText}</span>
+                        </div>
+                        <div class="satellite-info">
+                            ${sat.type} • ${yearsInOrbit}y • NORAD ${sat.noradId}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Add click listeners
+            document.querySelectorAll('.satellite-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const noradId = parseInt(card.dataset.norad);
+                    const sat = canadianSatellites.find(s => s.noradId === noradId);
+                    if (sat) selectSatellite(sat);
+                });
+            });
+        }
+
+        // Select satellite
+        function selectSatellite(sat) {
+            selectedSatellite = sat;
+            
+            // Update selected state in list
+            document.querySelectorAll('.satellite-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelector(`[data-norad="${sat.noradId}"]`)?.classList.add('selected');
+            
+            // Pan map to satellite
+            if (sat.position) {
+                map.setView([sat.position.latitude, sat.position.longitude], 5);
+            }
+            
+            showSatelliteDetails(sat);
+        }
+
+        // Show satellite details
+        function showSatelliteDetails(sat) {
+            const panel = document.getElementById('detail-panel');
+            panel.classList.add('active');
+            
+            const yearsInOrbit = (new Date().getFullYear() - sat.launchYear).toFixed(1);
+            const statusText = sat.status === 'active' ? 
+                translations[currentLang]['active-status'] : 
+                translations[currentLang]['inactive-status'];
+
+            document.getElementById('detail-name').textContent = sat.name;
+            document.getElementById('detail-status').innerHTML = `
+                <span class="status-badge status-${sat.status}">${statusText}</span>
+            `;
+
+            // Mission details
+            const missionHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">${translations[currentLang]['launch-date']}</span>
+                    <span class="detail-value">${sat.launchYear}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">${translations[currentLang]['years-in-orbit']}</span>
+                    <span class="detail-value">${yearsInOrbit}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">${translations[currentLang]['norad-id']}</span>
+                    <span class="detail-value">${sat.noradId}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">${translations[currentLang]['mission-type']}</span>
+                    <span class="detail-value">${sat.type}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">${translations[currentLang]['operator']}</span>
+                    <span class="detail-value">${sat.operator}</span>
+                </div>
+            `;
+            document.getElementById('mission-details').innerHTML = missionHTML;
+
+            // Orbital details
+            if (sat.position) {
+                const velocity = sat.position.velocity ? 
+                    Math.sqrt(
+                        sat.position.velocity.x ** 2 + 
+                        sat.position.velocity.y ** 2 + 
+                        sat.position.velocity.z ** 2
+                    ) * 60 * 60 : 0;
+                
+                const tle = tleData[sat.noradId];
+                let period = '--';
+                if (tle) {
+                    try {
+                        const satrec = satellite.twoline2satrec(tle.line1, tle.line2);
+                        period = (1440 / satrec.no).toFixed(2);
+                    } catch (e) {}
+                }
+
+                const orbitalHTML = `
+                    <div class="detail-row">
+                        <span class="detail-label">${translations[currentLang]['altitude']}</span>
+                        <span class="detail-value">${sat.position.altitude.toFixed(0)} km</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">${translations[currentLang]['velocity']}</span>
+                        <span class="detail-value">${velocity.toFixed(0)} km/h</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">${translations[currentLang]['latitude']}</span>
+                        <span class="detail-value">${sat.position.latitude.toFixed(4)}°</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">${translations[currentLang]['longitude']}</span>
+                        <span class="detail-value">${sat.position.longitude.toFixed(4)}°</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">${translations[currentLang]['period']}</span>
+                        <span class="detail-value">${period} min</span>
+                    </div>
+                `;
+                document.getElementById('orbital-details').innerHTML = orbitalHTML;
+            }
+        }
+
+        // Calculate pass predictions
+        function calculatePassPredictions(sat, observerLat, observerLon) {
+            const tle = tleData[sat.noradId];
+            if (!tle) return null;
+
+            try {
+                const satrec = satellite.twoline2satrec(tle.line1, tle.line2);
+                const now = new Date();
+                const passes = [];
+
+                // Check next 24 hours in 1-minute intervals
+                for (let i = 0; i < 1440; i++) {
+                    const testTime = new Date(now.getTime() + i * 60000);
+                    const positionAndVelocity = satellite.propagate(satrec, testTime);
+                    
+                    if (positionAndVelocity.position) {
+                        const gmst = satellite.gstime(testTime);
+                        const observerGd = {
+                            latitude: observerLat * Math.PI / 180,
+                            longitude: observerLon * Math.PI / 180,
+                            height: 0.1
+                        };
+                        
+                        const positionEcf = satellite.eciToEcf(positionAndVelocity.position, gmst);
+                        const lookAngles = satellite.ecfToLookAngles(observerGd, positionEcf);
+                        const elevation = lookAngles.elevation * 180 / Math.PI;
+                        
+                        if (elevation > 10 && passes.length < 3) {
+                            passes.push({
+                                time: testTime,
+                                elevation: elevation,
+                                azimuth: lookAngles.azimuth * 180 / Math.PI
+                            });
+                            i += 10; // Skip ahead to avoid duplicate passes
+                        }
+                    }
+                }
+
+                return passes.length > 0 ? passes[0] : null;
+            } catch (e) {
+                console.error('Error calculating passes:', e);
+            }
+            return null;
+        }
+
+        // Event listeners
+        document.getElementById('lang-toggle').addEventListener('click', () => {
+            setLanguage(currentLang === 'en' ? 'fr' : 'en');
+        });
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            renderSatelliteList(activeFilter, e.target.value);
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const search = document.getElementById('search-input').value;
+                renderSatelliteList(btn.dataset.filter, search);
+            });
+        });
+
+        document.getElementById('location-select').addEventListener('change', (e) => {
+            if (e.target.value && selectedSatellite) {
+                const [lat, lon] = e.target.value.split(',').map(Number);
+                const pass = calculatePassPredictions(selectedSatellite, lat, lon);
+                
+                if (pass) {
+                    const timeStr = pass.time.toLocaleString(currentLang === 'en' ? 'en-CA' : 'fr-CA');
+                    document.getElementById('pass-details').innerHTML = `
+                        <div class="detail-row">
+                            <span class="detail-label">${translations[currentLang]['next-pass']}</span>
+                            <span class="detail-value">${timeStr}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">${translations[currentLang]['max-elevation']}</span>
+                            <span class="detail-value">${pass.elevation.toFixed(1)}°</span>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('pass-details').innerHTML = `
+                        <div class="detail-label">No passes above 10° in next 24h</div>
+                    `;
+                }
+            }
+        });
+
+        // Initialize
+        initMap();
+        renderSatelliteList();
+        fetchTLEData();
+
+        // Update every 30 seconds
+        updateInterval = setInterval(() => {
+            updateSatellitePositions();
+        }, 60000);
+    </script>
+</body>
+</html>

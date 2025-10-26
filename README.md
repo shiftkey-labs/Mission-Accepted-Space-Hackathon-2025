@@ -12,8 +12,8 @@ By combining satellite Earth Observation data with data feeds, and applying **ma
 ---
 
 ## Data Sources  
-- **Satellite AIS (Automatic Identification System)** → Ship positions and routes.  
-- **Tagging datasets (DFO/WWF)** → Leatherback turtle migration corridors.
+- **Satellite AIS (Automatic Identification System)** → Ship positions and routes.  https://globalfishingwatch.org/
+- **Tagging datasets (DFO/WWF)** → Leatherback turtle migration corridors.  https://open.canada.ca/data/dataset/7d187ff6-19f9-4f57-9de3-bd38ab760643
   
 ## Approach  
 1. **Data Integration**  
@@ -21,8 +21,8 @@ By combining satellite Earth Observation data with data feeds, and applying **ma
    - Highlighted overlap “red zones” where risks to coastlines and wildlife are highest.  
 
 2. **Prediction with KNN Model**  
-   - Trained a **K-Nearest Neighbors (KNN) regression model** on turtle migration and vessel route data.  
-   - Model predicts likely turtle positions and overlap zones based on historical sightings, distance, and time.  
+   - Trained a **K-Nearest Neighbors (KNN) regression model** on turtle migration. 
+   - Model predicts likely turtle positions based on historical sightings, distance, and time.  
    - Filters out unrealistic predictions by constraining distances and checking against land boundaries.  
 
 3. **Protection Outcomes**  

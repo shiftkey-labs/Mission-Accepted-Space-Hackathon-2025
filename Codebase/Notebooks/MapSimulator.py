@@ -19,16 +19,8 @@ EndDate_Output = '2024-12-31'
 
 MapTemplate = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson'
 
-#==============================================================================
-
 def prepare_turtle_data():
-    """
-    Loads raw turtle data, cleans it, trains a KNN model for daily prediction, 
-    filters out predictions that are too far from original sightings or fall on land,
-    and exports the combined data and metadata, constrained to the OUTPUT_START/END_DATE range.
-    """
     try:
-        
         output_start = pd.to_datetime(StartDate_Output)
         output_end = pd.to_datetime(EndDate_Output)
 
@@ -47,10 +39,7 @@ def prepare_turtle_data():
         if not all(cols_to_check):
             print("Error: Could not find all required columns (e.g., lat, long, day, month, year).")
             return
-
-        # Null Data Cleaner
         df_cleaned = df.dropna(subset=cols_to_check).copy()
-        
        
         date_cols_map = {year_col: 'year', month_col: 'month', day_col: 'day'}
         df_cleaned['date'] = pd.to_datetime(df_cleaned[[year_col, month_col, day_col]].rename(columns=date_cols_map), errors='coerce')
@@ -61,9 +50,8 @@ def prepare_turtle_data():
 
         df_cleaned['latitude'] = df_cleaned[lat_col]
         df_cleaned['longitude'] = df_cleaned[long_col]
-        df_train_all = df_cleaned.copy() # All clean data for model training
+        df_train_all = df_cleaned.copy() 
 
-        print(f"Training KNN Regressors for Lat/Lon with N={Lat_Long_KNN} using ALL available data...")
         
         X_train = df_train_all[['day_of_year', 'year']]
         Y_lat_train = df_train_all['latitude']
@@ -74,7 +62,6 @@ def prepare_turtle_data():
         knn_lon = KNeighborsRegressor(n_neighbors=Lat_Long_KNN)
         knn_lon.fit(X_train, Y_lon_train)
 
-        print(f"Generating synthetic DAILY data points between {StartDate_Output} and {EndDate_Output}...")
         
         date_range = pd.date_range(start=output_start, end=output_end, freq='D')
         
@@ -92,9 +79,6 @@ def prepare_turtle_data():
         df_trend['longitude'] = knn_lon.predict(X_trend)
         
         max_time_index = df_trend['time_index'].max()
-
-        print(f"Filtering trend points based on activity (Max distance {MaxDistCovered} km)...")
-
         
         knn_geo_dist = KNeighborsRegressor(n_neighbors=NeighborsForAccuracy, metric='haversine')
         X_geo_train = np.radians(df_train_all[['latitude', 'longitude']].values)
@@ -105,7 +89,6 @@ def prepare_turtle_data():
         
         mean_dist_rad = distances.mean(axis=1) 
         
-        # Radians -> KM
         mean_dist_km = mean_dist_rad * 6371 
 
         df_trend['mean_dist_km'] = mean_dist_km
@@ -128,7 +111,6 @@ def prepare_turtle_data():
             df_trend_final = df_trend_filtered.drop(land_indices).copy()
 
         except Exception as e:
-            print(f"⚠️ Warning: Geographic filtering failed (network/parsing). Continuing without land check. Error: {e}")
             df_trend_final = df_trend_filtered.copy()
 
 
@@ -154,24 +136,18 @@ def prepare_turtle_data():
         df_combined.to_csv(Predicted_TurtleDS, index=False)
         
         metadata = {
-            'minDate': output_start.strftime('%Y-%m-%d'), # Min date is now 2024-01-01
+            'minDate': output_start.strftime('%Y-%m-%d'),
             'maxTimeIndex': max_time_index
         }
         with open(TurtleMetadata, 'w') as f:
             json.dump(metadata, f, indent=4)
         
-        print("Data Preparation Complete!")
-        print(f"  - Output Date Range: {StartDate_Output} to {EndDate_Output}")
-        print(f"  - Original Sightings (in range): {len(df_train_export)}")
-        print(f"  - Final Filtered Trend Points: {len(df_trend_export)}")
-        print(f"  - Output written to '{Predicted_TurtleDS}' and '{TurtleMetadata}'")
-        
         
     except FileNotFoundError:
-        print(f"Error: Raw file '{TurtleDataSet_Raw}' not found. Please ensure the file exists.")
+        print(f"Error: Raw file '{TurtleDataSet_Raw}' not found.")
     except ImportError as ie:
         print(f"Error: Required library not found. Please install: {ie}")
-        print("   Required libraries: pandas, numpy, scikit-learn, shapely, geopandas.")
+        print("Required libraries: pandas, numpy, scikit-learn, shapely, geopandas.")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 

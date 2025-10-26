@@ -5,7 +5,7 @@ Canada has the largest coastline in the world, and its shorelines are increasing
 
 Our project focuses on **two key factors**:  
 1. **Shipping routes** → increased vessel traffic near Canadian coastlines.  
-2. **Leatherback turtle migration** → endangered species at risk from habitat changes and vessel collisions.  
+2. **Leatherback turtle migration** → endangered species at risk from habitat changes and fishing vessels.  
 
 By combining satellite Earth Observation data with data feeds, and applying **machine learning with a K-Nearest Neighbors (KNN) prediction model**, a prototype was built that visualizes and predicts risk zones where **climate change, human activity, and biodiversity overlap**.  
 

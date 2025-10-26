@@ -29,3 +29,7 @@ By combining satellite Earth Observation data with data feeds, and applying **ma
    - Identify safer shipping corridors away from sensitive habitats.  
    - Inform conservation policy for marine ecosystems.  
    - Support shoreline protection by reducing human-caused pressure.  
+
+**Team Members**
+Rehab Shakir - [LinkedIn](www.linkedin.com/in/rehabshakir)
+Tanishka Ghosh - [LinkedIn](https://www.linkedin.com/in/tanishka-ghosh)

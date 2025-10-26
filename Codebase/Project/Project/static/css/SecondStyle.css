@@ -1,0 +1,215 @@
+/* === THEME VARIABLES === */
+:root {
+    --nv-bg: #131313;        /* page/topbar background */
+    --nv-panel: #191919;     /* drawer/panel */
+    --nv-accent: #006bce;    /* accent */
+    --nv-text: #ffffff;      /* text */
+    --nv-shadow: rgba(19,19,19,.7);
+}
+
+/* === NAVIGATION TOP BAR === */
+.nv-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--nv-bg);
+    color: var(--nv-text);
+    box-shadow: 0 6px 8px var(--nv-shadow);
+    z-index: 1000;
+    padding: 0 20px;
+}
+
+/* === LOGO STYLING === */
+.nv-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--nv-text);
+    text-decoration: none;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.nv-logo-img {
+    height: 28px;
+    display: block;
+}
+
+/* === HAMBURGER MENU BUTTON === */
+.nv-menu-btn {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.nv-bar {
+    height: 3px;
+    width: 100%;
+    background: var(--nv-text);
+    border-radius: 2px;
+    transition: transform .25s ease, opacity .25s ease, background .25s ease;
+}
+
+/* Hamburger Animation */
+.nv-menu-btn.nv-active .nv-bar:nth-child(1) {
+    transform: translateY(12.5px) rotate(45deg);
+    background: var(--nv-accent);
+}
+
+.nv-menu-btn.nv-active .nv-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.nv-menu-btn.nv-active .nv-bar:nth-child(3) {
+    transform: translateY(-12.5px) rotate(-45deg);
+    background: var(--nv-accent);
+}
+
+/* === SIDE NAVIGATION === */
+.nv-side {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    background: var(--nv-panel);
+    color: var(--nv-text);
+    box-shadow: 6px 0 12px var(--nv-shadow);
+    padding-top: 80px;
+    transition: left .3s ease;
+    z-index: 999;
+}
+
+.nv-side.active,
+.nv-side.nv-open {
+    left: 0;
+}
+
+/* === NAVIGATION LIST === */
+.nv-list {
+    list-style: none;
+    margin: 0 0 0 24px;
+    padding: 0;
+    color: white;
+}
+
+.nv-list a {
+    display: block;
+    padding: 14px 0;
+    font-size: 22px;
+    color: var(--nv-text);
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: nvSlideUp .45s ease forwards;
+}
+
+.nv-list a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 6px;
+    height: 2px;
+    width: 0;
+    background: var(--nv-accent);
+    transition: width .35s ease;
+}
+
+.nv-list a:hover::before {
+    width: 100%;
+}
+
+/* Navigation Item Animation Delays */
+.nv-list li:nth-child(1) a { animation-delay: .05s; }
+.nv-list li:nth-child(2) a { animation-delay: .1s; }
+.nv-list li:nth-child(3) a { animation-delay: .15s; }
+.nv-list li:nth-child(4) a { animation-delay: .2s; }
+
+/* === CONTACT WAVE ANIMATION === */
+.nv-contact-wave {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.nv-contact-wave .loading-wave {
+    width: 60px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.nv-contact-wave .loading-bar {
+    width: 6px;
+    height: 6px;
+    margin: 0 2px;
+    background-color: var(--nv-accent);
+    border-radius: 3px;
+    animation: loading-wave-animation 0.8s ease-in-out infinite;
+}
+
+.nv-contact-wave .loading-bar:nth-child(2) { animation-delay: 0.1s; }
+.nv-contact-wave .loading-bar:nth-child(3) { animation-delay: 0.2s; }
+.nv-contact-wave .loading-bar:nth-child(4) { animation-delay: 0.3s; }
+
+/* === BACKDROP === */
+.nv-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+    z-index: 998;
+}
+
+.nv-backdrop.nv-show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* === ANIMATIONS === */
+@keyframes nvSlideUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes loading-wave-animation {
+    0%   { height: 6px; }
+    50%  { height: 18px; }
+    100% { height: 6px; }
+}
+
+/* === UTILITIES === */
+.nv-push {
+    padding-top: 96px;
+}

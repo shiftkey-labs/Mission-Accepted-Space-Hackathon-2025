@@ -1,0 +1,273 @@
+/* ===========================
+   THEME ROOT + GLOBAL RESET
+   =========================== */
+:root {
+  --t: 0; /* scroll progress from hero -> sticky header */
+  --bg: #000;
+  --text: #eee;
+  --text-soft: #cfd6de;
+  --accent: #4a9eff;
+  --header-h: 72px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ===========================
+   HERO
+   =========================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  background-image: url("https://cdn.discordapp.com/attachments/1431803621074276384/1431803634169020467/image.png?ex=68febe8c&is=68fd6d0c&hm=713999273897d4d84452d5fc9af5f251974a03a6630ee37b43c4f9eb8360d4d8&");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.hero-title {
+  position: absolute;
+  left: 5vw;
+  bottom: 10vh;
+  margin: 0;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  text-shadow: 0 6px 24px rgba(0,0,0,.6);
+  font-size: clamp(2rem, 6vw, 4rem);
+  transform: translate(
+    calc(var(--t) * -2vw),
+    calc(var(--t) * -60vh)
+  ) scale(calc(1 - var(--t) * .25));
+  transform-origin: left bottom;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Dark fade over hero as user scrolls */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: var(--t);
+  pointer-events: none;
+}
+
+/* ===========================
+   STICKY HEADER (Black box)
+   =========================== */
+.mission-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--header-h);
+  background: #000;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: .85rem 1.25rem;
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * 24px));
+  pointer-events: calc(var(--t) * 1);
+}
+
+.mission-title {
+  margin: 0;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: clamp(1.25rem, 3.2vw, 1.75rem);
+}
+
+.mission-line {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: clamp(.9rem, 2.2vw, 1rem);
+  line-height: 1.45;
+}
+
+/* ===========================
+   CONTENT BASE
+   =========================== */
+.content {
+  min-height: 200vh; /* placeholder: ensures scrollability */
+  padding: 2rem 5vw;
+  line-height: 1.7;
+}
+
+
+/* ==== DATA OVERVIEW CONTAINER ==== */
+.data-overview {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+}
+
+/* subtle divider between sections inside */
+.data-overview h2 {
+  margin-top: 28px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.data-overview h2:first-of-type {
+  border-top: none;
+  margin-top: 0;
+}
+
+/* ===== make the titles glow subtly ===== */
+.info-title {
+  display: inline-block;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  letter-spacing: .5px;
+  position: relative;
+}
+
+/* animated underline: */
+.info-title::after {
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-8px;
+  height:3px;
+  width:0%;
+  background: linear-gradient(90deg,#4aa8ff,transparent 85%);
+  border-radius:3px;
+  transform:translateX(-50%);
+  transition:width .3s ease;
+}
+.info-title:hover::after {
+  width:70%;
+}
+
+/* ===== text styling ===== */
+.info-text {
+  color:#d8e5ff;
+  font-size:1.05rem;
+  line-height:1.7;
+  margin: 8px 0 14px;
+  text-align: left;
+  opacity: 0.95;
+}
+
+/* ===== bullet list ===== */
+.info-list {
+  margin: 0 0 20px;
+  padding-left: 1.1rem;
+  color:#e6ecff;
+  font-size:1rem;
+  line-height:1.6;
+}
+.info-list li {
+  margin: 6px 0;
+  position: relative;
+  padding-left: 4px;
+}
+
+/* custom bullet glow */
+.info-list li::marker {
+  color: #5eb3ff;
+}
+
+/* Bottom strip container */
+.photo-strip{
+  max-width: 1200px;
+  margin: 60px auto 40px;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+/* Each photo tile */
+.photo-strip .tile{
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.28);
+  transform: translateY(var(--offset, 0px));
+  transition: transform .25s ease, box-shadow .25s ease;
+  background: #0e0e10;
+}
+
+/* Stagger (up/down alternating) */
+.photo-strip .tile:nth-child(1){ --offset: -14px; }
+.photo-strip .tile:nth-child(2){ --offset: 10px; }
+.photo-strip .tile:nth-child(3){ --offset: -10px; }
+.photo-strip .tile:nth-child(4){ --offset: 14px; }
+
+/* Tall portrait look */
+.photo-strip .tile img{
+  display: block;
+  width: 100%;
+  height: 460px;                 /* tweak height here */
+  object-fit: cover;             /* fill while keeping subject centered */
+  object-position: center;
+  filter: saturate(1.02) contrast(1.02);
+  transition: transform .35s ease, filter .35s ease;
+}
+
+/* Hover polish */
+.photo-strip .tile:hover{
+  box-shadow: 0 16px 34px rgba(0,0,0,.36);
+  transform: translateY(calc(var(--offset, 0px) - 4px));
+}
+.photo-strip .tile:hover img{
+  transform: scale(1.03);
+  filter: saturate(1.08) contrast(1.05);
+}
+
+/* Caption bar (exactly 4 words recommended) */
+.photo-strip figcaption{
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 40%, rgba(0,0,0,.7) 100%);
+  color: #f2f6ff;
+  font-size: .98rem;
+  font-weight: 600;
+  letter-spacing: .2px;
+  text-align: center;
+  backdrop-filter: blur(2px);
+}
+
+/* Optional: a thin top border line on caption for definition */
+.photo-strip figcaption::before{
+  content:"";
+  position:absolute; left:10%; right:10%; top:0;
+  height:1px; background: rgba(255,255,255,.15);
+}
+
+/* Responsive */
+@media (max-width: 1100px){
+  .photo-strip{ grid-template-columns: repeat(2, 1fr); }
+  .photo-strip .tile img{ height: 420px; }
+}
+@media (max-width: 640px){
+  .photo-strip{ grid-template-columns: 1fr; }
+  .photo-strip .tile{ --offset: 0px; } /* no stagger on mobile */
+  .photo-strip .tile img{ height: 420px; }
+}

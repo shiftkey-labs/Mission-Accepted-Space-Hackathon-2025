@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DataMap</title>
+        <!-- Load Leaflet CSS first -->
+        <link rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin />
+        <!-- Then load your CSS files -->
+        <link rel="stylesheet" href="../../static/css/style.css">
+        <link rel="stylesheet" href="../../static/css/SecondStyle.css">
+        <link rel="stylesheet" href="../../static/css/MapStyle.css">
+    </head>
+
+    <body class="map-body">
+        <header class="nv-topbar">
+            <button class="nv-menu-btn" aria-label="Open menu"
+                aria-controls="nvSide" aria-expanded="false"
+                onclick="nvToggle()">
+                <span class="nv-bar"></span>
+                <span class="nv-bar"></span>
+                <span class="nv-bar"></span>
+            </button>
+
+            <a class="nv-logo" href="MenuPage.html">FROSTWATCH</a>
+
+            <a href="contact.html" class="nv-contact-wave">
+                <div class="loading-wave">
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                </div>
+            </a>
+        </header>
+
+        <aside id="nvSide" class="nv-side" aria-hidden="true">
+            <nav>
+                <ul class="nv-list">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="AboutUs.html">What is PermaFrost?</a></li>
+                    <li><a href="MissionStatement.html">Mission
+                            Statement</a></li>
+                    <li><a href="DataMap.html">Map</a></li>
+                    <li><a href="BehindTheScenes.html">Our Code</a></li>
+                    <li><a href="Resources.html">Our Data</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="dont-touch-me">
+
+            <div id="map"></div>
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+                integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+                crossorigin>
+                </script>
+
+            <script src="../../static/script.js"></script>
+
+        </div>
+
+        <script>
+            function nvToggle() {
+                const nvSide = document.getElementById('nvSide');
+                const menuBtn = document.querySelector('.nv-menu-btn');
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                
+                menuBtn.setAttribute('aria-expanded', !isExpanded);
+                nvSide.setAttribute('aria-hidden', isExpanded);
+                nvSide.classList.toggle('active');
+            }
+        </script>
+
+    </body>
+
+</html>

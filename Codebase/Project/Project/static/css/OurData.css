@@ -1,0 +1,132 @@
+/* ===========================
+   THEME ROOT + GLOBAL RESET
+   =========================== */
+:root {
+  --t: 0; /* scroll progress from hero -> sticky header */
+  --bg: #000;
+  --text: #eee;
+  --text-soft: #cfd6de;
+  --accent: #4a9eff;
+  --header-h: 72px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ===========================
+   HERO
+   =========================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  background-image: url("https://cdn.pixabay.com/photo/2024/01/29/22/47/ai-generated-8540922_1280.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.hero-title {
+  position: absolute;
+  left: 5vw;
+  bottom: 10vh;
+  margin: 0;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  text-shadow: 0 6px 24px rgba(0,0,0,.6);
+  font-size: clamp(2rem, 6vw, 4rem);
+  transform: translate(
+    calc(var(--t) * -2vw),
+    calc(var(--t) * -60vh)
+  ) scale(calc(1 - var(--t) * .25));
+  transform-origin: left bottom;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Dark fade over hero as user scrolls */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: var(--t);
+  pointer-events: none;
+}
+
+/* ===========================
+   STICKY HEADER (Black box)
+   =========================== */
+.mission-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--header-h);
+  background: #000;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: .85rem 1.25rem;
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * 24px));
+  pointer-events: calc(var(--t) * 1);
+}
+
+.mission-title {
+  margin: 0;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: clamp(1.25rem, 3.2vw, 1.75rem);
+}
+
+.mission-line {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: clamp(.9rem, 2.2vw, 1rem);
+  line-height: 1.45;
+}
+
+/* ===========================
+   CONTENT BASE
+   =========================== */
+.content {
+  min-height: 200vh; /* placeholder: ensures scrollability */
+  padding: 2rem 5vw;
+  line-height: 1.7;
+}
+
+
+.four-grid {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "top-left top-right"
+    "bottom-left bottom-right";
+  margin: 40px auto;
+  max-width: 1100px;
+  padding: 20px;
+}
+
+/* assign areas */
+.top-left      { grid-area: top-left; }
+.top-right     { grid-area: top-right; }
+.bottom-left   { grid-area: bottom-left; }
+.bottom-right  { grid-area: bottom-right; }

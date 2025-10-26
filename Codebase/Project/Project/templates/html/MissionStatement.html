@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostWatch</title>
+    <link rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin />
+        <link rel="stylesheet" href="../../static/css/style.css">
+        <link rel="stylesheet" href="../../static/css/SecondStyle.css">
+        <link rel="stylesheet" href="../../static/css/MapStyle.css">
+        <link rel="stylesheet" href="../../static/css/mission.css">
+    </head>
+
+
+<body class ="mission-body">
+
+<header class="nv-topbar">
+    <button class="nv-menu-btn" aria-label="Open menu" aria-controls="nvSide" aria-expanded="false" onclick="nvToggle()">
+      <span class="nv-bar"></span>
+      <span class="nv-bar"></span>
+      <span class="nv-bar"></span>
+    </button>
+
+    <a class="nv-logo" href="MenuPage.html">FROSTWATCH</a>
+
+  <a href="contact.html" class="nv-contact-wave">
+    <div class="loading-wave">
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+    </div>
+  </a>
+</header>
+
+<aside id="nvSide" class="nv-side" aria-hidden="true">
+  <nav>
+    <ul class="nv-list">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="AboutUs.html">What is PermaFrost?</a></li>
+      <li><a href="MissionStatement.html">Mission Statement</a></li>
+      <li><a href="DataMap.html">Map</a></li>
+      <li><a href="BehindTheScenes.html">Our Code</a></li>
+      <li><a href="Resources.html">Our Data</a></li>
+    </ul>
+  </nav>
+</aside>
+
+
+
+<!--Stuff to add-->
+
+<div class="hero" id="hero">
+  <h1 class="hero-title">Mission Statement</h1>
+  <div class="hero-overlay" aria-hidden="true"></div>
+</div>
+
+
+<!-- BLACK BOX that fades in and sticks -->
+<header class="mission-header" id="missionHeader">
+  <div class="mission-stack">
+    <h1 class="mission-title">Mission Statement</h1>
+  </div>
+</header>
+
+<main class="content">
+  
+  <section class="mission-block">
+  <h2 class="mission-body">
+    Our mission is to use satellite-based monitoring to identify northern Canadian
+    communities at risk from permafrost thaw and coastal erosion. By combining
+    geospatial data with climate indicators, we aim to help protect vulnerable
+    coastlines, inform infrastructure planning, and support long-term environmental
+    resilience.
+  </h2>
+</section>
+
+
+</main>
+
+
+<!-- Your page content -->
+<main class="content">
+  <!-- ... -->
+</main>
+
+
+
+
+
+<!-- NAV BAR SCRIPT -->
+    <script>
+      function nvToggle() {
+    const nvSide = document.getElementById('nvSide');
+    const menuBtn = document.querySelector('.nv-menu-btn');
+    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+    
+    menuBtn.setAttribute('aria-expanded', !isExpanded);
+    nvSide.setAttribute('aria-hidden', isExpanded);
+    nvSide.classList.toggle('active');
+}
+    </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const hero  = document.getElementById('hero');
+  const root  = document.documentElement;
+
+  let heroH = hero.offsetHeight;
+  let ticking = false;
+
+  function onResize() {
+    heroH = hero.offsetHeight;
+    update();
+  }
+
+  function update() {
+    // progress 0..1 across the hero height
+    const y = window.scrollY || window.pageYOffset || 0;
+    let t = heroH > 0 ? y / heroH : 1;
+    if (t < 0) t = 0;
+    if (t > 1) t = 1;
+
+    // ease a bit for smoother feel (optional)
+    const eased = t * (2 - t); // easeOutQuad
+
+    root.style.setProperty('--t', eased);
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize);
+  window.addEventListener('orientationchange', onResize);
+
+  // initial set
+  update();
+});
+</script>
+
+
+</body>
+</html>
+
+

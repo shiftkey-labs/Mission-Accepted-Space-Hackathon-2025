@@ -1,0 +1,192 @@
+:root { --t: 0; }               /* 0 = top, 1 = past hero */
+
+/* Fullscreen hero with background image */
+.hero {
+  position: relative;
+  height: 100vh;                /* full screen hero; change if you want shorter */
+  background-image: url("https://www.etsmtl.ca/uploads/_1440x810_crop_Center-Center_70_none/MDA_Satellite.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* The title that starts on the hero and moves upward/left as you scroll */
+.hero-title {
+  position: absolute;
+  left: 5vw;                    /* start near bottom-left */
+  bottom: 10vh;
+  margin: 0;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  text-shadow: 0 6px 24px rgba(0,0,0,.6);
+  transform: translate(
+    calc(var(--t) * -2vw),       /* slide a bit left toward edge */
+    calc(var(--t) * -60vh)       /* move up towards the header position */
+  ) scale(calc(1 - var(--t) * .25)); /* get smaller as it travels */
+  transform-origin: left bottom;
+  font-size: clamp(2rem, 6vw, 4rem);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Black overlay that fades in over the hero as you scroll */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: var(--t);            /* 0 -> 1 as we scroll */
+  transition: opacity 0s;       /* JS drives it each frame */
+  pointer-events: none;
+}
+
+/* Sticky black header that appears once you leave the hero */
+.mission-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: 72px;                 /* “black box” height */
+  background: #000;
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  opacity: var(--t);            /* fade in while hero fades out */
+  /* When near top (t ~ 0), ignore pointer events so clicks go to hero; enable after */
+    pointer-events: calc(var(--t) * 1);
+}
+
+/* Title in the sticky header, top-left corner */
+.mission-title {
+  margin: 0;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: clamp(1.25rem, 3.2vw, 1.75rem);
+}
+
+/* Page background */
+html, body { height: 100%; }
+body { margin: 0; background: #000; color: #eee; }
+
+
+/* Sticky black box */
+.mission-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #000;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  /* Fade in and “pull up” as you scroll */
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * 24px));
+  transition: opacity 0s, transform 0s; /* JS drives updates */
+  pointer-events: auto;
+}
+
+/* Stack: Title + lines (vertical) */
+.mission-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 1.25rem;
+}
+
+/* Title */
+.mission-title {
+  margin: 0;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: clamp(1.25rem, 3.2vw, 1.75rem);
+}
+
+/* Lines */
+.mission-line {
+  margin: 0;
+  color: #cfd6de;
+  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  line-height: 1.45;
+}
+
+.content {
+  min-height: 10vh;    /* makes page scrollable */
+  padding: 2rem 5vw;
+}
+
+
+/* ==== UPGRADED MISSION TEXT AREA ==== */
+
+.mission-stack {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: inherit;
+  padding: 30px 25px;
+}
+
+.mission-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 14px;
+  color: #ffffff;
+  position: relative;
+  display: inline-block;
+}
+
+/* Underline like About Us headings */
+.mission-title::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #3aa3ff, transparent 85%);
+  transition: width .28s ease;
+}
+
+.mission-title:hover::after {
+  width: 70%;
+}
+
+/* Lines under title */
+.mission-line {
+  color: #d6e7ff;
+  font-size: 1.15rem;
+  margin: 10px 0;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+/* Fade in when header sticks */
+.mission-header.stuck .mission-line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slight spacing for readability */
+.mission-header {
+  padding-bottom: 30px;
+}
+
+.mission-block {
+  max-width: 900px;
+  margin: 90px auto 60px;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.mission-body {
+  font-size: 2rem;
+  line-height: 1.85;
+  color: #e9eef8;
+  font-style: italic;
+  font-weight: 500;
+}

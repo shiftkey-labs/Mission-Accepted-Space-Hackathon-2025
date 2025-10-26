@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostWatch</title>
+    <link rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin />
+        <link rel="stylesheet" href="../../static/css/style.css">
+        <link rel="stylesheet" href="../../static/css/SecondStyle.css">
+        <link rel="stylesheet" href="../../static/css/MapStyle.css">
+        <link rel="stylesheet" href="../../static/css/HeroStyle.css">
+        <link rel="stylesheet" href="../../static/css/cards.css">
+    </head>
+<body class = "home-body">
+        <header class="nv-topbar">
+            <button class="nv-menu-btn" aria-label="Open menu" aria-controls="nvSide" aria-expanded="false" onclick="nvToggle()">
+                <span class="nv-bar"></span>
+                <span class="nv-bar"></span>
+                <span class="nv-bar"></span>
+            </button>
+
+            <a class="nv-logo" href="./MenuPage.html">FROSTWATCH</a>
+
+            <a href="contact.html" class="nv-contact-wave">
+                <div class="loading-wave">
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                </div>
+            </a>
+        </header>
+
+        <aside id="nvSide" class="nv-side" aria-hidden="true">
+            <nav>
+                <ul class="nv-list">
+                    <li><a href="./Home.html">Home</a></li>
+                    <li><a href="./AboutUs.html">What is Permafrost</a></li>
+                    <li><a href="./MissionStatement.html">Our Mission</a></li>
+                    <li><a href="./DataMap.html">Map</a></li>
+                    <li><a href="BehindTheScenes.html">Our Code</a></li>
+                    <li><a href="Resources.html">Our Data</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+
+
+        
+        <section class="hero" aria-label="Video banner">
+            <!-- YouTube background -->
+            <div id="video-holder">
+            <iframe
+                id="ytbg"
+                title="Background video"
+                src="https://www.youtube.com/embed/k2AQnpcW_HY?autoplay=1&mute=1&controls=0&loop=1&playlist=k2AQnpcW_HY&modestbranding=1&rel=0&playsinline=1&fs=0&enablejsapi=1&disablekb=1"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write">
+            </iframe>
+            </div>
+
+            <!-- Banner text -->
+            <div class="hero-content">
+            <div>
+                <h1>FrostWatch</h1>
+                <p>Permafrost insights for northern communities</p>
+            </div>
+            </div>
+        </section>
+
+        <main class="main-container">
+            <h1>Welcome to FrostWatch</h1>
+            <p>Data collected to identify melting of permafrost and protect those who live in the GREAT NORTH</p>
+        </main>
+
+        <section class ="spacer"></section>
+        <section class="cards">
+
+        <!-- Card 1 -->
+        <a class="card" href="AboutUs.html">
+            <figure class="card__thumb">
+            <img src="https://campbellsci-res.cloudinary.com/image/upload/f_auto,c_limit,w_700,h_700/460.png" alt="About Permafrost">
+            </figure>
+            <header class="card__header">
+            <h3 class="card__title">About Permafrost</h3>
+            <p class="card__sub">Learn about us and what permafrost is and why it matters.</p>
+            </header>
+            <footer class="card__footer">
+            <span>OPEN</span>
+            <svg class="card__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            </footer>
+        </a>
+
+        <!-- Card 2 -->
+        <a class="card" href="DataMap.html">
+            <figure class="card__thumb">
+            <img src="https://live.staticflickr.com/3654/3647298350_00bfed02ac_z.jpg" alt="Interactive Map">
+            </figure>
+            <header class="card__header">
+            <h3 class="card__title">Interactive Map</h3>
+            <p class="card__sub">Visualize permafrost effected communities.</p>
+            </header>
+            <footer class="card__footer">
+            <span>OPEN</span>
+            <svg class="card__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            </footer>
+        </a>
+
+        <!-- Card 3 -->
+        <a class="card" href="MissionStatement.html">
+            <figure class="card__thumb">
+            <img src="https://www.asc-csa.gc.ca/images/recherche/tiles/6_hr.jpg" alt="Data & Research">
+            </figure>
+            <header class="card__header">
+            <h3 class="card__title">Our Mission</h3>
+            <p class="card__sub">What our goal is!</p>
+            </header>
+            <footer class="card__footer">
+            <span>OPEN</span>
+            <svg class="card__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            </footer>
+        </a>
+
+        </section>
+
+        <section class="cards second-row">
+        <!-- Card 4 -->
+        <a class="card" href="BehindTheScenes.html">
+            <figure class="card__thumb">
+            <img src="https://cdn.discordapp.com/attachments/1405898945720352789/1431807542899638373/image.png?ex=68fec22f&is=68fd70af&hm=c5f39f6525b0f5c98e8a4d64cbf4f7a7abfc2e4b6c2ee05553eb899980a5de18&" alt="Our Code">
+            </figure>
+            <header class="card__header">
+            <h3 class="card__title">Our Code</h3>
+            <p class="card__sub">Take a look at the code that powers FrostWatch.</p>
+            </header>
+            <footer class="card__footer">
+            <span>OPEN</span>
+            <svg class="card__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h12m-5-5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            </footer>
+        </a>
+
+        <!-- Card 5 -->
+        <a class="card" href="Resources.html">
+            <figure class="card__thumb">
+            <img src="https://revelate.co/wp-content/uploads/2023/10/iStock-1448152453-1920x1080.jpg" alt="Resources">
+            </figure>
+            <header class="card__header">
+            <h3 class="card__title">Our Data</h3>
+            <p class="card__sub">Find more information on permafrost and how to help.</p>
+            </header>
+            <footer class="card__footer">
+            <span>OPEN</span>
+            <svg class="card__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h12m-5-5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            </footer>
+        </a>
+
+
+
+
+        </section>
+
+
+        </section>
+
+
+
+
+
+
+        <script>
+            function nvToggle() {
+                const nvSide = document.getElementById('nvSide');
+                const menuBtn = document.querySelector('.nv-menu-btn');
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                
+                menuBtn.setAttribute('aria-expanded', !isExpanded);
+                nvSide.setAttribute('aria-hidden', isExpanded);
+                nvSide.classList.toggle('active');
+            }
+        </script>
+
+        <script>
+        // Load IFrame API
+        (function loadYT() {
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        })();
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('ytbg', {
+            events: {
+                'onReady': function (e) {
+                try { e.target.mute(); } catch(_) {}
+                e.target.playVideo();
+                },
+                'onStateChange': function (e) {
+                if (e.data !== YT.PlayerState.PLAYING) {
+                    e.target.playVideo();
+                }
+                }
+            }
+            });
+        }
+
+        // failsafe: keep forcing play if paused by browser
+        setInterval(function () {
+            if (player && typeof player.getPlayerState === 'function') {
+            var s = player.getPlayerState();
+            if (s !== 1) player.playVideo();
+            }
+        }, 3000);
+        </script>
+    </body>
+
+    <footer class="fw-footer">
+        <p>Background footage © USGS (U.S. Geological Survey) — public domain.
+            <a href="https://www.youtube.com/watch?v=k2AQnpcW_HY" target="_blank" rel="noopener">
+            Source Video
+            </a>
+        </p>
+    </footer>
+
+</html>

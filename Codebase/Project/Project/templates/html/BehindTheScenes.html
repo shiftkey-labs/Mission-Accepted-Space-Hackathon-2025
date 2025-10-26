@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostWatch</title>
+    <link rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin />
+        <link rel="stylesheet" href="../../static/css/style.css">
+        <link rel="stylesheet" href="../../static/css/SecondStyle.css">
+        <link rel="stylesheet" href="../../static/css/MapStyle.css">
+        <link rel="stylesheet" href="../../static/css/mission.css">
+        <link rel="stylesheet" href="../../static/css/Resource+BehindTheScenes.css">
+
+    </head>
+
+
+<body>
+
+<header class="nv-topbar">
+    <button class="nv-menu-btn" aria-label="Open menu" aria-controls="nvSide" aria-expanded="false" onclick="nvToggle()">
+      <span class="nv-bar"></span>
+      <span class="nv-bar"></span>
+      <span class="nv-bar"></span>
+    </button>
+
+    <a class="nv-logo" href="MenuPage.html">FROSTWATCH</a>
+
+  <a href="contact.html" class="nv-contact-wave">
+    <div class="loading-wave">
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+    </div>
+  </a>
+</header>
+
+<aside id="nvSide" class="nv-side" aria-hidden="true">
+  <nav>
+    <ul class="nv-list">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="AboutUs.html">What is PermaFrost?</a></li>
+      <li><a href="MissionStatement.html">Mission Statement</a></li>
+      <li><a href="DataMap.html">Map</a></li>
+      <li><a href="BehindTheScenes.html">Our Code</a></li>
+      <li><a href="Resources.html">Our Data</a></li>
+    </ul>
+  </nav>
+</aside>
+
+
+
+<!--Stuff to add-->
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-overlay"></div>
+  <h1 class="hero-title">Behind The Scenes</h1>
+</div>
+
+<!-- STICKY HEADER -->
+<header class="mission-header">
+  <div class="mission-stack">
+    <h1 class="mission-title">Behind The Scenes</h1>
+    <p class="mission-line">How the project is built, our data workflow, and the technology powering the platform.</p>
+  </div>
+</header>
+
+<!-- PAGE CONTENT -->
+<main class="content">
+  
+<section class="data-overview">
+
+  <h2 class="info-title">Data Sources</h2>
+  <p class="info-text">
+    We collected satellite data using Google Earth Engine (GEE) and NASA datasets.  
+    The main mapped variables are:
+  </p>
+  <ul class="info-list">
+    <li><strong>NDWI (water presence)</strong> – surface water and drainage changes</li>
+    <li><strong>Snow/Ice change (6-year trend)</strong> – long-term warming indicator</li>
+    <li><strong>Slope</strong> – identifies terrain more prone to erosion</li>
+    <li><strong>Vegetation index</strong> – soil stability from plant cover</li>
+    <li><strong>Ground temperature</strong> – detects permafrost thaw</li>
+  </ul>
+
+  <h2 class="info-title">Model Processing</h2>
+  <p class="info-text">
+    All variables were processed in Python and scaled from <strong>1 to 5</strong>, where:
+  </p>
+  <p class="info-text"><em>5 = highest thaw / erosion risk</em></p>
+  <p class="info-text">
+    Ground temperature is the most important factor because thawed permafrost loses strength and erodes faster.
+  </p>
+
+  <h2 class="info-title">Permafrost Detection</h2>
+  <ul class="info-list">
+    <li>Permafrost = ground frozen for at least two years</li>
+    <li>Above 0 °C = active thaw</li>
+    <li>Thaw weakens soil and increases erosion</li>
+  </ul>
+
+  <h2 class="info-title">Erosion Risk Logic</h2>
+  <ul class="info-list">
+    <li><strong>Slope</strong> – steeper land fails more easily</li>
+    <li><strong>Water (NDWI)</strong> – runoff accelerates ground loss</li>
+    <li><strong>Vegetation</strong> – reduced cover = weaker soil</li>
+    <li><strong>Snow/Ice decline</strong> – long-term warming trend</li>
+    <li><strong>Temperature</strong> – thawed ground is unstable</li>
+  </ul>
+
+  <h2 class="info-title">Final Index</h2>
+  <p class="info-text">
+    All variables are combined into a single <strong>Erosion Risk Index</strong>.
+  </p>
+  <p class="info-text">
+    The higher the index → the more likely the land is actively thawing and eroding.
+  </p>
+
+  <h2 class="info-title">Map Visualization</h2>
+  <p class="info-text">
+    We built an interactive map using an open-source mapping platform combined with OpenWeather API data to visualize erosion risk across Canada.
+  </p>
+  <p class="info-text">
+    The frontend is powered by JavaScript, which renders a color-coded risk layer so users can scan regions and instantly see which areas face low, medium, or high erosion risk.
+  </p>
+
+
+  <h2 class="info-title">System Overview</h2>
+
+  <h3 class="info-subtitle">Backend (Data Processing)</h3>
+  <ul class="info-list">
+    <li>Python handles all data retrieval, filtering, and calculations.</li>
+    <li>Core variables calculated: ground temperature, slope, vegetation, NDWI, and snow/ice change.</li>
+    <li>Each factor was normalized and scored from 1 to 5 based on its impact on permafrost thaw and erosion.</li>
+    <li>Scores were combined using a weighted formula to generate the final <strong>Erosion Risk Index</strong>.</li>
+  </ul>
+
+  <h3 class="info-subtitle">Frontend (Visualization)</h3>
+  <ul class="info-list">
+    <li>JavaScript displays the processed data on an interactive map of Canada.</li>
+    <li>The map uses color-coded markers to show erosion severity levels.</li>
+    <li>Users can visually compare regions and quickly identify high-risk areas.</li>
+    <li>This makes complex geospatial data understandable at a glance.</li>
+  </ul>
+
+</section>
+
+
+
+<section class="photo-strip">
+  <figure class="tile">
+    <img src="https://media.discordapp.net/attachments/1303852745081491479/1432038759800770560/image.png?ex=68ff9986&is=68fe4806&hm=562384c34cd4c588dcbe064e70ad8f8eed915925729bf548cbbd092ff2b66b66&=&format=webp&quality=lossless&width=570&height=658" alt="Describe photo 1 briefly">
+    <figcaption>Backend Code of Data collection</figcaption>
+  </figure>
+
+  <figure class="tile">
+    <img src="https://media.discordapp.net/attachments/1303852745081491479/1432039672992895027/Screenshot_2025-10-26_131346.png?ex=68ff9a60&is=68fe48e0&hm=8e15c61aefb3a4bb296fa492d1677c4783ce2f2a3a50caad475a2c2f4243bafa&=&format=webp&quality=lossless&width=766&height=658" alt="Describe photo 2 briefly">
+    <figcaption>Backend Code of Calculating Satellite Risk Index</figcaption>
+  </figure>
+
+  <figure class="tile">
+    <img src="https://media.discordapp.net/attachments/1431803621074276384/1432040969779286067/image.png?ex=68ff9b95&is=68fe4a15&hm=ee474d151e58ccd739cb476090c7b39d444a40f3e4f522465d4aea55a8cfa022&=&format=webp&quality=lossless&width=479&height=611" alt="Describe photo 3 briefly">
+    <figcaption>Front End Code of Interactive Map</figcaption>
+  </figure>
+
+  <figure class="tile">
+    <img src="https://media.discordapp.net/attachments/1431803621074276384/1432047531142942912/image.png?ex=68ffa1b1&is=68fe5031&hm=3d8e76642984ee926130340946d0f60362ec272f9e5cd74893216571b7bbcab4&=&format=webp&quality=lossless&width=536&height=658" alt="Describe photo 4 briefly">
+    <figcaption>Front End Code of Website User Interface</figcaption>
+  </figure>
+</section>
+
+
+
+</main>
+
+
+
+<!-- NAV BAR SCRIPT -->
+    <script>
+      function nvToggle() {
+    const nvSide = document.getElementById('nvSide');
+    const menuBtn = document.querySelector('.nv-menu-btn');
+    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+    
+    menuBtn.setAttribute('aria-expanded', !isExpanded);
+    nvSide.setAttribute('aria-hidden', isExpanded);
+    nvSide.classList.toggle('active');
+}
+
+    </script>
+</body>
+</html>
+
+

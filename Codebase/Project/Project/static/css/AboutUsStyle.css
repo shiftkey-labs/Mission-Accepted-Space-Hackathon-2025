@@ -1,0 +1,274 @@
+/* Full-screen banner */
+html, body { height: 100%; }
+.slider-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;      /* change if you want shorter */
+  overflow: hidden;
+  background: #0f0f0f;
+}
+
+/* Track */
+.slider {
+  display: flex;
+  height: 100%;
+  transition: transform 0.45s ease;
+  will-change: transform;
+}
+
+/* Each child of .slider is exactly one viewport */
+.slider > * {
+  flex: 0 0 100%;
+}
+
+/* Images fill slide */
+.slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none; /* clicks hit overlays */
+}
+
+/* Clickable left/right halves (SIBLINGS of .slider) */
+.slider-nav-left,
+.slider-nav-right {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 10;
+  appearance: none; -webkit-appearance: none;
+  background: transparent;
+  border: 0; outline: none; padding: 0;
+  cursor: pointer;
+}
+.slider-nav-left  { left: 0; }
+.slider-nav-right { right: 0; }
+
+/* Remove any hover tint */
+.slider-nav-left:hover,
+.slider-nav-right:hover { background: transparent; }
+
+.slider-overlay {
+  position: absolute;
+  inset: 0;               /* cover entire slide area */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;            /* above everything */
+  pointer-events: none;   /* so clicking still moves slides */
+}
+
+.slider-overlay h1 {
+  font-size: 4rem;        /* change size as you like */
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.7);
+}
+
+.slider-nav-left[aria-disabled="true"],
+.slider-nav-right[aria-disabled="true"],
+.slider-nav-left.is-disabled,
+.slider-nav-right.is-disabled {
+  pointer-events: none;
+  opacity: 0.4; /* or whatever you prefer */
+}
+
+/* ===== Main body ===== */
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background:#131313;
+  color:#eee;
+}
+
+/* GRID LAYOUT */
+.divider {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 2fr 1fr;  /* left bigger, right smaller */
+  grid-template-areas:
+    "section aside"
+    "article aside";
+  margin: 40px;
+}
+
+/* Map semantic elements to grid */
+.info-section  { grid-area: section; }
+.info-aside    { grid-area: aside; }
+.info-article  { grid-area: article; }
+
+/* Optional just to visualize */
+.info-section, .info-aside, .info-article {
+  background: #191919;
+  border: 1px transparent;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.info-block {
+  position: relative;
+  max-width: 850px;
+  margin: 50px auto;
+  padding: 30px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  transition: transform 0.35s ease, background 0.35s ease;
+}
+
+
+/* Header only */
+.info-title {
+  font-size: 1.9rem;
+  color: #dcecff;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+  position: relative;
+}
+
+/* Underline base state */
+.info-title::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 3px;
+  background: #4a9eff;
+  border-radius: 2px;
+  transition: width 0.35s ease;
+}
+
+/* 🔹 Underline triggers ONLY when hovering title */
+.info-title:hover::after {
+  width: 60%;
+}
+
+.info-text {
+  font-size: 1.1rem;
+  color: #e8f4ff;
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+
+/* Optional light zoom on whole block */
+.info-block:hover {
+  transform: scale(1.015);
+  background: rgba(255,255,255,0.07);
+}
+
+
+
+
+/* REMOVE both layers of boxes */
+.info-section,
+.info-aside,
+.info-article,
+.info-block {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+
+
+.Info-PART {
+  align-items: center ;
+  margin-bottom: 40px;
+}
+
+.Info-PART h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-weight: 600;
+  position: relative;
+}
+
+/* ===== Center the whole content area ===== */
+.main-content{
+  max-width: 1100px;          /* page width */
+  margin: 0 auto;             /* centers the block */
+  padding: 48px 20px;         /* breathing room */
+}
+
+/* keep your grid, but make sure it centers inside .main-content */
+.divider{
+  display: grid;
+  gap: 28px;
+  grid-template-columns: 2fr 1fr;
+  align-items: start;
+}
+
+/* stack on small screens */
+@media (max-width: 900px){
+  .divider{ grid-template-columns: 1fr; }
+  .info-aside{ order: 3; }     /* put aside after the article on mobile, if you want */
+}
+
+/* ===== Pretty headers: underline only on hover ===== */
+.info-title{
+  display: inline-block;
+  position: relative;
+  font-size: clamp(1.6rem, 2.8vw, 2rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: .3px;
+  text-align: center;
+}
+
+.info-title::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-8px;
+  height:3px;
+  width:0%;
+  background: linear-gradient(90deg,#3aa3ff,transparent 85%);
+  border-radius:2px;
+  transform: translateX(-50%);
+  transition: width .28s ease;
+}
+.info-title:hover::after{ width: 70%; }
+
+/* ===== Nicer body text ===== */
+.info-text{
+  color:#d9e7ff;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 10px 0 14px;
+  text-align: center;     /* center the blurb */
+}
+
+/* Bullets readable, but not giant */
+.info-list{
+  margin: 0 0 22px;
+  padding-left: 1.2rem;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color:#eee;
+}
+
+/* Optional: tighter bullets */
+.info-list li{ margin: 6px 0; }
+
+/* ===== Appear-on-scroll (fade + slight lift) ===== */
+.reveal{
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal.in{
+  opacity: 1;
+  transform: translateY(0);
+}

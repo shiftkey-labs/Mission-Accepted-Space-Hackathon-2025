@@ -1,0 +1,28 @@
+CREDITS & OPEN SOURCE REFERENCES
+
+• Background Hero Video:
+  https://www.youtube.com/watch?v=k2AQnpcW_HY
+
+• Satellite Data Source:
+  https://www.eodms-sgdot.nrcan-rncan.gc.ca/index-en.html
+
+• CSS / UI Inspiration:
+  - https://devsnap.me/css-menu
+  - https://uiverse.io/mrpumps31232/strange-dragonfly-94
+  - https://bulma.io/
+  - https://uiverse.io/loaders
+
+• Photo Sources:
+  - https://www.campbellsci.co.za/canadian-permafrost
+  - https://www.asc-csa.gc.ca/eng/satellites/earth-observation/
+  - https://www.etsmtl.ca/actualites/de-lets-a-lespace-laventure-dun-diplome-chez-mda-space
+  - https://unsplash.com/s/photos/open-source
+  - https://pixabay.com/illustrations/ai-generated-big-data-data-8540922/
+  - https://www.flickr.com/photos/39489794@N04/3647298350
+
+• Article / Concept Reference:
+  https://revelate.co/blog/streamlining-data-requests-in-data-marketplaces/
+
+• AI Assistance (copywriting + layout help):
+  Some text generation and layout guidance supported by ChatGPT (OpenAI).
+

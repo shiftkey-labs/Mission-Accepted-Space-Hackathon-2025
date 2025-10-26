@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostWatch</title>
+    <link rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin />
+        <link rel="stylesheet" href="../../static/css/style.css">
+        <link rel="stylesheet" href="../../static/css/SecondStyle.css">
+        <link rel="stylesheet" href="../../static/css/MapStyle.css">
+        <link rel="stylesheet" href="../../static/css/mission.css">
+        <link rel="stylesheet" href="../../static/css/OurData.css">
+
+    </head>
+
+
+<body>
+
+<header class="nv-topbar">
+    <button class="nv-menu-btn" aria-label="Open menu" aria-controls="nvSide" aria-expanded="false" onclick="nvToggle()">
+      <span class="nv-bar"></span>
+      <span class="nv-bar"></span>
+      <span class="nv-bar"></span>
+    </button>
+
+    <a class="nv-logo" href="MenuPage.html">FROSTWATCH</a>
+
+  <a href="contact.html" class="nv-contact-wave">
+    <div class="loading-wave">
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+    </div>
+  </a>
+</header>
+
+<aside id="nvSide" class="nv-side" aria-hidden="true">
+  <nav>
+    <ul class="nv-list">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="AboutUs.html">What is PermaFrost?</a></li>
+      <li><a href="MissionStatement.html">Mission Statement</a></li>
+      <li><a href="DataMap.html">Map</a></li>
+      <li><a href="BehindTheScenes.html">Our Code</a></li>
+      <li><a href="Resources.html">Our Data</a></li>
+    </ul>
+  </nav>
+</aside>
+
+
+
+<!--Stuff to add-->
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-overlay"></div>
+  <h1 class="hero-title">Our Data</h1>
+</div>
+
+<!-- STICKY HEADER -->
+<header class="mission-header">
+  <div class="mission-stack">
+    <h1 class="mission-title">Our Data</h1>
+    <p class="mission-line">Where we got our data.</p>
+  </div>
+</header>
+
+<!-- PAGE CONTENT -->
+<main class="content">
+  <h2>Data Overview</h2>
+  <p>Using a variety of different satellite that utilize different methods of data collection we collecting information in all the listed categories.</p>
+
+
+
+<div class="four-grid">
+
+  <div class="top-left">
+    <!-- TOP LEFT CONTENT GOES HERE -->
+    <h2>GROUND TEMPERATURES</h2>
+    <p>
+      Using NASA's earth data repository we utilized the measured ground temperatures collected from their MODIS terra satellite. By measuring the earths emitted infrared radiation, instruments on the satellite detect the different wavelengths using sensors. Algorithms back on earth then convert these waves into ground temperature estimates, accounting for effecting factors such a cloud coverage.
+    </p>
+  </div>
+
+  <div class="top-right">
+    <!-- TOP RIGHT CONTENT GOES HERE -->
+    <h2>NORMALIZED DIFFERNCE VEGETATION INDEX (NDVI) AND NORMALIZED DIFFERENCE WATER INDEX</h2>
+    <p>
+      By utilizing Google Earths API we collected data points from their array of satellites both commercial from Maxar Technologies and government satellites such as NASA's Landsat and European Space Agency (ESA) sentinel satellites. Specifically using the ESA's Sentinel-2 this satellite monitors both the NDVI change and NDWI change by analyzing areas of reflectance of red, green and near infrared (NIR) light. With vegetation absorbing red light and reflecting NIR while water absorbs green light and NIR, the Sentinel-2 is ably to identify locations with high or low indexes and account for the changes.
+    </p>
+  </div>
+
+  <div class="bottom-left">
+    <!-- BOTTOM LEFT CONTENT GOES HERE -->
+    <h2>SNOW/ICE CHANGE</h2>
+    <p>
+
+    To attain the change in snow and ice coverage we used planet-insights data from their Pelican satellite that was launched in 2023 as apart of the Skynet constellation. This satellite takes high resolution imagery paired with Synthetic Aperture Radar (SAR) to determine different surface types. SAR satellites emit microwave pulses and analyzing what is reflected back as surfaces like ice and snow reflect microwaves differently. This method is highly effected as it can penetrate clouds and fog for more accurate readings.
+    </p>
+  </div>
+
+  <div class="bottom-right">
+    <!-- BOTTOM RIGHT CONTENT GOES HERE -->
+    <h2>SATALITE IMAGE</h2>
+     <img src="https://media.discordapp.net/attachments/1303852745081491479/1432040435676876870/Untitled_design.jpg?ex=68ff9b15&is=68fe4995&hm=a0bf2411bd2e3cf159942d87824f698b74ccb01d01bfa9d9e37fc9bd57de25b0&=&format=webp&width=614&height=795"
+     style="display:block; margin: 20px auto; max-width:280px; width:100%; height:auto; border-radius:14px; box-shadow:0 8px 18px rgba(0,0,0,0.35);">
+
+     <p style= "margin-left: 30px auto; font-style: italic">Image from EODMS RCM image products</p>
+
+  </div>
+</main>
+</div>
+
+
+<!-- NAV BAR SCRIPT -->
+    <script>
+      function nvToggle() {
+    const nvSide = document.getElementById('nvSide');
+    const menuBtn = document.querySelector('.nv-menu-btn');
+    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+    
+    menuBtn.setAttribute('aria-expanded', !isExpanded);
+    nvSide.setAttribute('aria-hidden', isExpanded);
+    nvSide.classList.toggle('active');
+}
+
+    </script>
+</body>
+</html>
+
+

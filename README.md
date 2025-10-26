@@ -12,7 +12,7 @@ By combining satellite Earth Observation data with data feeds, and applying **ma
 ---
 
 ## Data Sources  
-- **Satellite AIS (Automatic Identification System)** → Ship positions and routes.  https://globalfishingwatch.org/
+- **Satellite AIS (Automatic Identification System)** → Ship positions and routes.  https://globalfishingwatch.org/ (which uses candian RADARSAT-2 data)
 - **Tagging datasets (DFO/WWF)** → Leatherback turtle migration corridors.  https://open.canada.ca/data/dataset/7d187ff6-19f9-4f57-9de3-bd38ab760643
   
 ## Approach  
